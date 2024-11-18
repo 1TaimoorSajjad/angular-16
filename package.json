@@ -1,6 +1,6 @@
 {
-  "name": "nemt-panel",
-  "version": "3.0.0",
+  "name": "angular-16",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
