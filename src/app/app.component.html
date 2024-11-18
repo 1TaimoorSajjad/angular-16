@@ -1,0 +1,25 @@
+<div *ngIf="isLoggedIn" class="flex h-full overflow-hidden">
+  <app-side-nav></app-side-nav>
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <app-header></app-header>
+    <div class="flex flex-1 items-stretch overflow-hidden">
+      <main class="flex-1 overflow-y-auto">
+        <router-outlet> </router-outlet>
+      </main>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="!isLoggedIn">
+  <app-signin></app-signin>
+</ng-container>
+
+<ngx-ui-loader
+  [fgsColor]="'#5046E4'"
+  [pbColor]="'#5046E4'"
+  [fgsType]="'fading-circle'"
+  [fgsPosition]="'top-left'"
+></ngx-ui-loader>
+<!-- <ngx-ui-loader></ngx-ui-loader> -->
+
+
+

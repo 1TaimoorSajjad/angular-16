@@ -1,0 +1,123 @@
+<div class="px-2 py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <button routerLink="add" type="button" class="btn-primary">
+          Add Addon
+        </button>
+      </div>
+      <div class="flex-1 flex justify-center">
+        <span class="text-main-light text-sm whitespace-nowrap">
+          Showing 10 entries
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <div>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="relative">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3" aria-hidden="true">
+            <svg class="mr-3 h-4 w-4 text-main-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <input type="text" name="searchSevice" id="search" class="pl-9" placeholder="Search" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+  
+    <div class="py-2 inline-block min-w-full">
+      <div class="flow-root">
+        <div class="inline-block min-w-full align-middle">
+          <div class="shadow ring-1 ring-main-base min-h-full">
+            <table class="min-w-full divide-y divide-main-base">
+              <thead>
+                <tr class="divide-x divide-gray-200">
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Actions
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Name
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Description
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Code
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Funding Source
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Space Type
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Created At
+                  </th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter whitespace-nowrap">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-300">
+                <tr class="divide-x divide-gray-300 group hover:bg-main-base-100 cursor-pointer">
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    <div class="flex justify-center divide-x items-center divide-main-base">
+                      <a href="#" class="px-2 text-main-primary hover:text-main-primary-hover duration-500 ease-linear">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                      </a>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                      <div class="font-medium text-main-dark">
+                        Addon Name
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                      <div class="font-medium text-main-dark">
+                        Addon Description
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    Addon Code
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                      <div class="font-medium text-main-dark">
+                        Funding Source Name
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                      <div class="font-medium text-main-dark">
+                        Space Type Name
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap">
+                    01/01/2023
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900 whitespace-nowrap text-center">
+                    <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <!-- More rows... -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

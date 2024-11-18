@@ -1,0 +1,197 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4  flex-1 min-h-screen bg-main-base-100">
+    <form [formGroup]="spaceTypeForm" (ngSubmit)="saveSpaceType()">
+      <div class="max-w-5xl flex flex-col gap-8">
+        <div class="card divide-y divide-main-base flex flex-col gap-8">
+          <div>
+            <div>
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+                <!-- {{spaceTypeId ? 'Edit' : 'Add'}} -->
+               Add
+              </h3>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="los" class="block text-sm font-medium text-main-secondary">Level of Service</label>
+                <div class="mt-1">
+  
+                  <ng-select formControlName="los" id="los" [clearable]="false"
+                    class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                    <ng-option value="">-- Select Level of Service --</ng-option>
+                    <ng-option value="wav">WAV</ng-option>
+                    <!-- <ng-option *ngFor="let los of levelOfServices" value="{{ los._id }}">{{los.title |
+                      capitalize}}</ng-option> -->
+                  </ng-select>
+  
+                </div>
+                <div *ngIf="form.los.errors && submitted">
+                  <div *ngIf="form.los.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Level of Service is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="sm:col-span-3">
+                <label for="name" class="block text-sm font-medium text-main-secondary">Name</label>
+                <div class="mt-1">
+                  <input type="text" formControlName="title" name="name" id="name" />
+                </div>
+                <div *ngIf="form.title.errors && submitted">
+                  <div *ngIf="form.title.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Name is Required
+                    </p>
+                  </div>
+                  <div *ngIf="form.title.errors.minlength" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Length must be 3
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-3" show-errors>
+                <label for="validationCustomUsername"
+                  class="block text-sm font-medium text-main-secondary">Description</label>
+                <div class="mt-1 flex gap-px">
+                  <input name="description" type="text" class="form-control " formControlName="description" />
+                </div>
+                <div *ngIf="form.description.errors && submitted ">
+                  <div *ngIf="form.description.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Description is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="sm:col-span-3" show-errors>
+                <label for="loadTime" class="block text-sm font-medium text-main-secondary">Load Time
+                  <span class="text-main-light">
+                    (min)
+                  </span>
+                </label>
+                <div class="mt-1 relative">
+                  <input [owlDateTimeTrigger]="loadTime" (ngModelChange)="onLoadTimeChange($event)"
+                    [owlDateTime]="loadTime" [readonly]="true" type="text" class="form-control" id="loadTime" formControlName="preLoadTime"
+                    placeholder="">
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <span class="text-gray-500 sm:text-sm" id="price-currency">
+                      <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <owl-date-time [pickerType]="'timer'" #loadTime></owl-date-time>
+                </div>
+                <div *ngIf="form.loadTime.errors">
+                  <div *ngIf="form.loadTime.errors.required && submitted " class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Load Time is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="sm:col-span-3" show-errors>
+                <label for="unloadTime" class="block text-sm font-medium text-main-secondary">Unload Time
+                  <span class="text-main-light">
+                    (min)
+                  </span>
+                </label>
+                <div class="mt-1 relative">
+                  <input [owlDateTimeTrigger]="unloadTime" (ngModelChange)="onUnLoadTimeChange($event)"
+                    formControlName="preUnLoadTime" [owlDateTime]="unloadTime" [readonly]="true" type="text" class="form-control"
+                    id="unloadTime" placeholder="">
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <span class="text-gray-500 sm:text-sm" id="price-currency">
+                      <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <owl-date-time [pickerType]="'timer'" #unloadTime></owl-date-time>
+                </div>
+                <div *ngIf="form.unloadTime.errors">
+                  <div *ngIf="form.unloadTime.errors.required && submitted " class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Unload Time is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-3">
+                <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                <div class="mt-1">
+                  <select id="status" formControlName="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div *ngIf="form.status.errors && submitted">
+                  <div *ngIf="form.status.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="sm:col-span-3">
+                <div class="">
+                  <div class="flex flex-col mt-5">
+                    <div class="text-sm font-medium text-main-dark">
+                      Wait & Return (WNR)
+                    </div>
+                    <div class="mt-.5">
+                      <button (click)="toggleWNR(form.wnr.value)"
+                        [ngClass]="form.wnr.value ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                        class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                        role="switch" aria-checked="false">
+                        <span class="sr-only">Use setting</span>
+                        <span [ngClass]="form.wnr.value ? 'translate-x-5' : 'translate-x-0'"
+                          class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                          <span
+                            [ngClass]="form.wnr.value ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                            class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                            aria-hidden="true">
+                            <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                              <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                          </span>
+                          <span
+                            [ngClass]="form.wnr.value ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                            class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                            aria-hidden="true">
+                            <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                              <path
+                                d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                            </svg>
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+  
+            </div>
+          </div>
+          <div class="pt-8">
+            <div class="flex justify-end">
+                <!-- {{spaceTypeId ? 'Update' : 'Create'}} -->
+              <button type="submit" class="ml-3 btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

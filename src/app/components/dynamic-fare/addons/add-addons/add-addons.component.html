@@ -1,0 +1,146 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4  flex-1 min-h-screen bg-main-base-100">
+    <form [formGroup]="addonForm" (ngSubmit)="saveAddon()">
+      <div class="max-w-5xl flex flex-col gap-8">
+        <div class="card divide-y divide-main-base flex flex-col gap-8">
+          <div>
+            <div>
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+                <!-- {{addonId ? 'Edit' : 'Add'}} -->
+                 Add
+              </h3>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="name" class="block text-sm font-medium text-main-secondary">Name</label>
+                <div class="mt-1">
+                  <input type="text" formControlName="title" name="name" id="name" />
+                </div>
+                <div *ngIf="form.title.errors && submitted">
+                  <div *ngIf="form.title.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Name is Required
+                    </p>
+                  </div>
+                  <div *ngIf="form.title.errors.minlength" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Length must be 3
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="sm:col-span-3" show-errors>
+                <label for="validationCustomUsername"
+                  class="block text-sm font-medium text-main-secondary">Description</label>
+                <div class="mt-1 flex gap-px">
+                  <input name="description" required type="text" class="form-control "
+                    formControlName="description" />
+                </div>
+                <div *ngIf="form.description.errors && submitted ">
+                  <div *ngIf="form.description.errors.required " class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Description is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-3">
+                <label for="validationCustomUsername"
+                  class="block text-sm font-medium text-main-secondary">Code</label>
+                <div class="mt-1 flex gap-px">
+                  <input name="code" type="text" class="form-control "
+                    formControlName="code" />
+                </div>
+
+                <div *ngIf="form.code.errors && submitted">
+                  <div *ngIf="form.code.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Code is Required
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="sm:col-span-3" >
+                <label for="validationCustomUsername"
+                  class="block text-sm font-medium text-main-secondary">Fare</label>
+                <div class="mt-1 flex gap-px">
+                  <input name="Fare" type="text" class="form-control "
+                    formControlName="fare" />
+                </div>
+              </div>
+                    <!-- Funding Source -->
+        <div class="sm:col-span-3">
+          <label for="cooperate" class="block text-sm font-medium text-main-secondary">Funding Source</label>
+          <div class="mt-1">
+            <ng-select formControlName="cooperate" id="cooperate" [clearable]="false"
+              (change)="onSelectFundingSource($event)"
+              [ngClass]="(submitted && form.cooperate.errors?.required) ? 'border-main-danger' : 'border-gray-300'"
+              class="form-control border-2 rounded-md">
+              <ng-option value="">-- Select Funding Source --</ng-option>
+              <ng-option value="">MTM</ng-option>
+              <ng-option value="">Logisticare</ng-option>
+              <!-- <ng-option *ngFor="let fundingSource of fundingSourceList | sortBy:'asc':'displayName'"
+                value="{{ fundingSource._id }}">{{fundingSource.displayName | capitalize}}</ng-option> -->
+            </ng-select>
+          </div>
+          <div *ngIf="form.cooperate.errors && submitted">
+            <div *ngIf="form.cooperate.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger font-bold">
+                Funding Source is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-3">
+          <label for="spaceType" class="block text-sm font-medium text-main-secondary">Space Type</label>
+          <div class="mt-1">
+            <ng-select  id="spaceType" formControlName="spaceType" [clearable]="false"
+            [ngClass]="(submitted && form.spaceType.errors?.required) ? 'border-main-danger' : 'border-gray-300'"
+            class="form-control border-2 rounded-md">
+            <ng-option value="">-- Select Space Type --</ng-option>
+            <ng-option value="abc">ABC</ng-option>
+            <!-- <ng-option *ngFor="let spaceType of spaceTypeList" value="{{ spaceType._id }}">{{spaceType.title | capitalize}}
+            </ng-option> -->
+          </ng-select>
+          </div>
+          <div *ngIf="form.spaceType.errors && submitted">
+            <div *ngIf="form.spaceType.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger font-bold">
+                Space Type is required
+              </p>
+            </div>
+          </div>
+        </div>
+              <div class="sm:col-span-3">
+                <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                <div class="mt-1">
+                  <select id="status" formControlName="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div *ngIf="form.status.errors && submitted">
+                  <div *ngIf="form.status.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pt-4">
+            <div class="flex justify-end">
+              <button type="submit" class="ml-3 btn-primary">
+                <!-- {{addonId ? 'Update' : 'Create'}} -->
+                 Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

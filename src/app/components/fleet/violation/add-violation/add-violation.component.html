@@ -1,0 +1,378 @@
+<div class="p-4 bg-gray-100 h-screen lg:py-4">
+    <form [formGroup]="violationForm" (ngSubmit)="createViolation()">
+    <div class="flex flex-col md:flex-row gap-4">
+
+        <div formGroupName="batch"  class="w-full md:w-1/2">
+            <div class="bg-white p-2 space-y-3 rounded-md">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 my-2"> Batch </h3>
+                <div class="flex gap-2 items-center">
+                    <div class="grid grid-cols-4 gap-2 items-center">
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Pickup Early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="pickupEarly" name="pickupEarly" id="pickupEarly" >
+                            
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Pickup Late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="pickupLate" name="pickupLate" id="pickupLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Dropoff Early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffEarly" name="dropoffEarly" id="dropoffEarly" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Dropoff allowed wait:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffWait" name="dropoffWait" id="dropoffWait" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Dropoff Late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffLate" name="dropoffLate" id="dropoffLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed scheduled early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="returnPickupEarly" name="returnPickupEarly" id="returnPickupEarly" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed wait:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="returnPickupWait" name="returnPickupWait" id="returnPickupWait" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed scheduled late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="returnPickupLate" name="returnPickupLate" id="returnPickupLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Onboard Time:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxOnBoardTime" name="maxOnBoardTime" id="maxOnBoardTime" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Break Cushion:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="breakCushion" name="breakCushion" id="breakCushion" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Distance:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxDistancePerRun" name="maxDistancePerRun" id="maxDistancePerRun" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">miles</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Trips:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxPerRun" name="maxPerRun" id="maxPerRun" >
+                        </div>
+                       
+
+                                  <!-- ---checkbox--- -->
+                                  <div class="col-span-4">
+                                    <div class="flex gap-4">
+        
+                                        <fieldset>
+                                            <div class="space-y-5">
+                                                <div class="relative flex items-start">
+                                                    <div class="flex h-6 items-center">
+                                                        <input formControlName="isCapacityViolation" id="isCapacityViolation" aria-describedby="isCapacityViolation-description"
+                                                            name="isCapacityViolation" type="checkbox"
+                                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                                    </div>
+                                                    <div class="ml-3 text-sm leading-6">
+                                                        <label for="isCapacityViolation" class="text-xs text-gray-500">Allow Onboard Violation(s)</label>
+        
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <div class="space-y-5">
+                                                <div class="relative flex items-start">
+                                                    <div class="flex h-6 items-center">
+                                                        <input formControlName="isOnboardViolation" id="isOnboardViolation" aria-describedby="isOnboardViolation-description"
+                                                            name="isOnboardViolation" type="checkbox"
+                                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                                    </div>
+                                                    <div class="ml-3 text-sm leading-6">
+                                                        <label for="isOnboardViolation" class="text-xs text-gray-500">Allow Capacity
+                                                            Violation(s)</label>
+        
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+                                        </fieldset>
+        
+                                    </div>
+                                </div>
+        
+                                <!-- ---checkbox--- -->
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div formGroupName="single"  class="w-full md:w-1/2">
+            <div class="bg-white p-2 space-y-3 rounded-md">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 my-2"> Single </h3>
+                <div class="flex gap-2 items-center">
+                    <div class="grid grid-cols-4 gap-2 items-center">
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Pickup Early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="pickupEarly" name="pickupEarly" id="pickupEarly" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Pickup allowed wait:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="pickupWait" name="pickupWait" id="pickupWait" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Pickup Late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="pickupLate" name="pickupLate" id="pickupLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Dropoff Early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffEarly" name="dropoffEarly" id="dropoffEarly" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Appt. Dropoff allowed wait:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffWait" name="dropoffWait" id="dropoffWait" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Dropoff Late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="dropoffLate" name="dropoffLate" id="dropoffLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed scheduled early:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input formControlName="returnPickupEarly" type="text" name="returnPickupEarly" id="returnPickupEarly" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed wait:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="returnPickupWait" name="returnPickupWait" id="returnPickupWait" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <!-- <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Return Pickup allowed scheduled late:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="returnPickupLate" name="returnPickupLate" id="returnPickupLate" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div> -->
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Onboard Time:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxOnBoardTime" name="maxOnBoardTime" id="maxOnBoardTime" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Break Cushion:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="breakCushion" name="breakCushion" id="breakCushion" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">minutes</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Distance:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxDistancePerRun" name="maxDistancePerRun" id="maxDistancePerRun" >
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">miles</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500">Max Trips:</p>
+                        </div>
+                        <div class="mt-2">
+                            <input type="text" formControlName="maxPerRun" name="maxPerRun" id="maxPerRun" >
+                        </div>
+                        
+
+
+                        <!-- ---checkbox--- -->
+                        <div class="col-span-4">
+                            <div class="flex gap-4">
+
+                                <fieldset>
+                                    <div class="space-y-5">
+                                        <div class="relative flex items-start">
+                                            <div class="flex h-6 items-center">
+                                                <input id=" isOnboardViolation" aria-describedby=" isOnboardViolation-description"
+                                                   formControlName="isOnboardViolation" name=" isOnboardViolation" type="checkbox"
+                                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                            </div>
+                                            <div class="ml-3 text-sm leading-6">
+                                                <label for=" isOnboardViolation" class="text-xs text-gray-500">Allow Onboard Violation(s)</label>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div class="space-y-5">
+                                        <div class="relative flex items-start">
+                                            <div class="flex h-6 items-center">
+                                                <input id="singleisCapacityViolation" aria-describedby="singleisCapacityViolation-description"
+                                                    formControlName="isCapacityViolation" name="isCapacityViolation" type="checkbox"
+                                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                            </div>
+                                            <div class="ml-3 text-sm leading-6">
+                                                <label for="singleisCapacityViolation" class="text-xs text-gray-500">Allow Capacity Violation</label>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <!-- ---checkbox--- -->
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="flex justify-end my-2">
+        <button class="ml-3 btn-primary mr-3" type="submit">Save</button>
+    </div>
+</form>
+</div>

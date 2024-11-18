@@ -1,0 +1,104 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4  flex-1 min-h-screen bg-main-base-100">
+    <form [formGroup]="levelOfServiceForm" (ngSubmit)="saveLevelOfService()">
+      <div class="max-w-5xl flex flex-col gap-8">
+        <div class="card divide-y divide-main-base flex flex-col gap-8">
+          <div>
+            <div>
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+                <!-- {{levelOfServiceId ? 'Edit' : 'Add'}} -->
+                 Add
+              </h3>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="name" class="block text-sm font-medium text-main-secondary">Name</label>
+                <div class="mt-1">
+                  <input type="text" formControlName="title" name="name" id="name" />
+                </div>
+                <div *ngIf="form.title.errors && submitted">
+                  <div *ngIf="form.title.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Name is Required
+                    </p>
+                  </div>
+                  <div *ngIf="form.title.errors.minlength" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Length must be 3
+                    </p>
+                  </div>
+                </div>
+  
+              </div>
+              <div class="sm:col-span-3" show-errors>
+                <label for="validationCustomUsername"
+                  class="block text-sm font-medium text-main-secondary">Description</label>
+                <div class="mt-1 flex gap-px">
+                  <input name="description" required type="text" class="form-control "
+                    formControlName="description" />
+                </div>
+                <div *ngIf="form.description.errors && submitted ">
+                  <div *ngIf="form.description.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Description is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-3">
+                <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                <div class="mt-1">
+                  <select id="status" formControlName="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div *ngIf="form.status.errors && submitted">
+                  <div *ngIf="form.status.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class=" mt-6">
+              <label for="address" class="block text-sm font-medium text-main-secondary"></label>
+              <div class="relative overflow-hidden rounded-full inline-flex mt-1">
+                <img *ngIf="form.profileImageURL.value" [src]="form.profileImageURL.value" alt="levelOfService-image"
+                  class="relative h-32 w-32 rounded-full border border-main-base" />
+                <img class="relative h-32 w-32 rounded-full border border-main-base" *ngIf="!form.profileImageURL.value"
+                  [src]="'assets/images/placeholders/car-placeholder.png'" />
+      
+                <label for="desktop-user-photo"
+                  class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100">
+                  <span>Change</span>
+                  <span class="sr-only"> user photo</span>
+                  <input #fileInput type="file"(change)="fileProcessing(fileInput,form.profileImageURL)" name="user-photo"
+                    class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-main-base opacity-0"
+                    accept="image/*" />
+                </label>
+              </div>
+              <div *ngIf="form.profileImageURL.errors && submitted">
+                <div *ngIf="form.profileImageURL.errors.required" class="error">
+                  <p class="mt-2 text-xs text-main-danger">
+                    Image is required
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+  
+          <div class="pt-4">
+            <div class="flex justify-end">
+  
+                <!-- {{levelOfServiceId ? 'Update' : 'Create'}} -->
+              <button type="submit" class="ml-3 btn-primary">Created</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

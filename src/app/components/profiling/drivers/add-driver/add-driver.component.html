@@ -1,0 +1,549 @@
+<div class="card flex-1 divide-y divide-main-base flex flex-col gap-4">
+    <form [formGroup]="createDriverFormV2" (ngSubmit)="onCreateDriverV2()">
+        <div>
+            <div>
+                <h3 class="text-lg font-medium leading-6 text-main-dark">
+                    Add <!-- {{driverUserId ? 'Edit' : 'Add'}} -->
+                </h3>
+
+
+            </div>
+            <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-6">
+
+
+                <div class="sm:col-span-2">
+                    <label for="legalName" class="block text-sm font-medium text-main-secondary">Legal Name</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="legalName" name="legalName" id="legalName" />
+                    </div>
+                    <div *ngIf="form.legalName.errors && submitted">
+                        <div *ngIf="form.legalName.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Legal Name is required
+                            </p>
+                        </div>
+                        <div *ngIf="form.legalName.errors.minlength" class="">
+                            <p class="mt-2 text-xs text-main-danger">Legal Name must be at least 3 characters.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="sm:col-span-2">
+                    <label for="firstName" class="block text-sm font-medium text-main-secondary">First Name</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="firstName" name="firstName" id="firstName" />
+                    </div>
+                    <div *ngIf="form.firstName.errors && submitted">
+                        <div *ngIf="form.firstName.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                First Name is required
+                            </p>
+                        </div>
+                        <div *ngIf="form.firstName.errors.minlength" class="">
+                            <p class="mt-2 text-xs text-main-danger">First Name must be at least 3 characters.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="lastName" class="block text-sm font-medium text-main-secondary">Last Name</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="lastName" name="lastName" id="lastName" />
+                    </div>
+                    <div *ngIf="form.lastName.errors && submitted">
+                        <div *ngIf="form.lastName.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Last Name is required
+                            </p>
+                        </div>
+                        <div *ngIf="form.lastName.errors.minlength" class="">
+                            <p class="mt-2 text-xs text-main-danger">Last Name must be at least 3 characters.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="profileRole" class="block text-sm font-medium text-main-secondary">Position</label>
+                    <div class="mt-1">
+                        <select id="profileRole" formControlName="profileRole">
+                            <option value="">-- Select Position --</option>
+                            <option value="driver">Driver</option>
+                            <option value="dispatcher">Dispatcher</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="form.profileRole.errors && submitted">
+                        <div *ngIf="form.profileRole.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Position is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="stationManager" class="block text-sm font-medium text-main-secondary">Station
+                        Manager</label>
+                    <div class="mt-1">
+                        <select id="stationManager" formControlName="stationManager">
+                            <option value="">-- Select Station Manager --</option>
+                            <option>XYZ</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="form.stationManager.errors && submitted">
+                        <div *ngIf="form.stationManager.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Station Manager is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="serviceAreas" class="block text-sm font-medium text-main-secondary">Service
+                        Area(s)</label>
+                    <div class="mt-1">
+                        <ng-select [items]="serviceAreas" formControlName="serviceAreas" [clearable]="false"
+                            [multiple]="true" [closeOnSelect]="false" bindValue="_id" bindLabel="name"
+                            placeholder="-- Select Service Area --"
+                            class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+                            [searchable]="true">
+
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                                    [ngModel]="item$.selected" /> {{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <div *ngIf="form.serviceAreas.errors && submitted">
+                        <div *ngIf="form.serviceAreas.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Service Area(s) is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="employeeId" class="block text-sm font-medium text-main-secondary">Employee ID</label>
+                    <div class="mt-1">
+
+                        <input type="text" formControlName="employeeId" name="employeeId" id="employeeId" />
+                    </div>
+
+                    <div *ngIf="form.employeeId.errors && submitted">
+                        <div *ngIf="form.employeeId.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Employee ID is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="type" class="block text-sm font-medium text-main-secondary">Employment Type</label>
+                    <div class="mt-1">
+                        <select id="type" formControlName="type">
+                            <option value="">-- Select Employment Type --</option>
+                            <option value="partTime">Part Time</option>
+                            <option value="fullTime">Full Time</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="form.type.errors && submitted">
+                        <div *ngIf="form.type.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Employment Type is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="costCenter" class="block text-sm font-medium text-main-secondary">Cost Center</label>
+                    <div class="mt-1">
+                        <div class="mt-1">
+                            <input type="text" formControlName="costCenter" name="costCenter" id="costCenter" />
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="form.costCenter.errors && submitted">
+                        <div *ngIf="form.costCenter.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Cost Center is required
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="sm:col-span-2">
+                    <label for="contactNumber" class="block text-sm font-medium text-main-secondary">Contact
+                        Number</label>
+                    <div class="mt-1">
+                        <input type="email" formControlName="contactNumber" name="contactNumber" id="contactNumber" />
+                    </div>
+                    <div *ngIf="form.contactNumber.errors && submitted">
+                        <div *ngIf="form.contactNumber.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Contact Number is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="sm:col-span-2">
+                    <label for="email" class="block text-sm font-medium text-main-secondary">Email</label>
+                    <div class="mt-1">
+                        <input type="email" formControlName="email" name="email" id="email" />
+                    </div>
+
+                    <div *ngIf="form.email.errors && submitted">
+                        <div *ngIf="form.email.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Email is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="password" class="block text-sm font-medium text-main-secondary">Password</label>
+                    <div class="mt-1">
+                        <input type="password" formControlName="password" name="password" id="password" />
+                    </div>
+                    <div *ngIf="form.password.errors && submitted">
+                        <div *ngIf="form.password.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger ">
+                                Password is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+                <!-- ----Zip Code -- -->
+                <div class="sm:col-span-2">
+                    <label for="zipCode" class="block text-sm font-medium text-main-secondary">Zip Code</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="zipCode" name="zipCode" id="zipCode" />
+                    </div>
+
+                    <div *ngIf="form.zipCode.errors && submitted">
+                        <div *ngIf="form.zipCode.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Zip is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="sm:col-span-2">
+                    <label for="address" class="block text-sm font-medium text-main-secondary">Driver Address</label>
+                    <div class="mt-1">
+                        <input type="text" google-place formControlName="address" (onSelect)="setAddress($event)"
+                            name="address" id="address" />
+                    </div>
+                    <div
+                        *ngIf="(form.address.errors || (form.latitude.value === 0 && form.latitude.value === 0 )) && submitted">
+                        <div *ngIf="(form.address.errors && form.address.errors.required) || (form.latitude.value === 0 && form.latitude.value === 0 )"
+                            class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Driver Address is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="startDate" class="block text-sm font-medium text-main-secondary">Start Date</label>
+                    <div class="mt-1">
+                        <input type="text" id="startDate" formControlName="preStartDate" [owlDateTime]="startDate"
+                            (ngModelChange)="onDateChange($event,form.startDate)" [owlDateTimeTrigger]="startDate"
+                            name="startDate" [readonly]="true" />
+                    </div>
+
+                    <div *ngIf="form.startDate.errors && submitted">
+                        <div *ngIf="form.startDate.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Start Date is required
+                            </p>
+                        </div>
+                    </div>
+                    <owl-date-time #startDate [pickerType]="'calendar'"></owl-date-time>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="toDate" class="block text-sm font-medium text-main-secondary">End Date</label>
+                    <div class="mt-1">
+                        <!-- <input type="date" formControlName="toDate" name="toDate" id="toDate" /> -->
+                        <input type="text" id="toDate" formControlName="preEndDate" [owlDateTime]="endDate"
+                            (ngModelChange)="onDateChange($event,form.endDate)" [owlDateTimeTrigger]="endDate"
+                            name="toDate" [readonly]="true" />
+                        <owl-date-time #endDate [pickerType]="'calendar'"></owl-date-time>
+                    </div>
+
+                    <div *ngIf="form.preEndDate.errors && submitted">
+                        <div *ngIf="form.preEndDate.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                End Date is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="sm:col-span-2">
+                    <label for="scheduleShell" class="block text-sm font-medium text-main-secondary">Schedule
+                        Shell(s)</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="scheduleShells" name="scheduleShell" id="scheduleShell" />
+                    </div>
+                    <div *ngIf="form.scheduleShells.errors && submitted">
+                        <div *ngIf="form.scheduleShells.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Schedule Shell(s) is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="License Number" class="block text-sm font-medium text-main-secondary">License
+                        Number</label>
+                    <div class="mt-1">
+                        <input type="text" formControlName="driverLicenseNumber" name="License Number"
+                            id="License Number" />
+                    </div>
+                    <div *ngIf="form.driverLicenseNumber.errors && submitted">
+                        <div *ngIf="form.driverLicenseNumber.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                License Number is required
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="accountStatus" class="block text-sm font-medium text-main-secondary">Status</label>
+                    <div class="mt-1">
+                        <select id="accountStatus" formControlName="accountStatus">
+                            <option value="">-- Select Status --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div *ngIf="form.accountStatus.errors && submitted">
+                        <div *ngIf="form.accountStatus.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Account Status is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-6">
+
+                <div class="sm:col-span-2">
+                    <label for="proficiency" class="block text-sm font-medium text-main-secondary">Proficiency</label>
+                    <!-- <div class="mt-1">
+              <ng-select [items]="spaceTypeList" formControlName="proficiency" [clearable]="false" [multiple]="true"
+                [closeOnSelect]="false" bindValue="_id" bindLabel="title" placeholder="-- Select Proficiency --"
+                class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+                [searchable]="true">
+  
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                    [ngModel]="item$.selected" /> {{item.title}}
+                </ng-template>
+              </ng-select>
+  
+            </div> -->
+
+                    <div *ngIf="form.proficiency.errors && submitted">
+                        <div *ngIf="form.proficiency.errors.required" class="error">
+                            <p class="mt-2 text-xs text-main-danger">
+                                Proficiency is required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="sm:col-span-2">
+            <label for="Competency" class="block text-sm font-medium text-main-secondary">Competency</label>
+            <div class="mt-1">
+              <ng-select [items]="equipmentList" formControlName="competency" [clearable]="false" [multiple]="true"
+                [closeOnSelect]="false" bindValue="_id" bindLabel="title" placeholder="-- Select Competency --"
+                class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+                [searchable]="true">
+  
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                    [ngModel]="item$.selected" /> {{item.title}}
+                </ng-template>
+              </ng-select>
+            </div>
+  
+            <div *ngIf="form.competency.errors && submitted">
+              <div *ngIf="form.competency.errors.required" class="error">
+                <p class="mt-2 text-xs text-main-danger">
+                  Competency is required
+                </p>
+              </div>
+            </div>
+          </div> -->
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="privateComment" class="block text-sm font-medium text-main-secondary">Special Requests
+                    </label>
+                    <div class="mt-1">
+                        <textarea formControlName="specialRequests" name="specialRequests"
+                            id="specialRequests"></textarea>
+                    </div>
+
+                </div>
+                <div class="sm:col-span-3">
+                    <label for="comment" class="block text-sm font-medium text-main-secondary">
+                        Limitations
+                    </label>
+                    <div class="mt-1">
+                        <textarea formControlName="limitation" name="limitation" id="limitation"></textarea>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class=" mt-6">
+                <label for="address" class="block text-sm font-medium text-main-secondary"></label>
+                <div class="relative overflow-hidden rounded-full inline-flex mt-1">
+                    <img *ngIf="form.profileImageURL.value" [src]="form.profileImageURL.value" alt="user-image"
+                        class="relative h-32 w-32 rounded-full border border-main-base" />
+                    <img class="relative h-32 w-32 rounded-full border border-main-base"
+                        *ngIf="!form.profileImageURL.value"
+                        [src]="'assets/images/placeholders/driver-placeholder.png'" />
+
+                    <label for="desktop-user-photo"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100">
+                        <span>Change</span>
+                        <span class="sr-only"> user photo</span>
+                        <input #fileInput type="file" (change)="fileProcessing(fileInput,form.profileImageURL)"
+                            name="user-photo"
+                            class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-main-base opacity-0"
+                            accept="image/*" />
+                    </label>
+                </div>
+                <!-- <div *ngIf="(selectedProfileImageFile === null && form.profileImageURL.value === null) && submitted" class="">
+            <p class="mt-2 text-xs text-main-danger">
+              Profile Image is required
+            </p>
+          </div> -->
+            </div>
+
+            <!-- -----Signature---- -->
+            <!-- *ngIf="driverUserId" -->
+            <div *ngIf="false" class="mt-6">
+                <div>
+                    <h3 class="text-lg font-medium leading-6 text-main-dark">
+                        Signature
+                    </h3>
+                    <p class="mt-1 text-sm text-main-light">
+                        Use authentic signatures.
+                    </p>
+                </div>
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-6 gap-y-6 gap-x-4">
+                    <div class="sm:col-span-2">
+                        <!-- <label for="role-type" class="block text-sm font-medium text-main-secondary">Driver
+                                    Signature</label> -->
+                        <div class="mt-1">
+                            <div
+                                class="relative flex flex-col items-center justify-center rounded-md border-2 border-dashed border-main-base px-4 pt-4 pb-4">
+
+                                <div class="relative space-y-1 text-center pb-2">
+                                    <img alt="user-image" [src]="form.driverSignatureImage.value" class="h-16 w-auto" />
+                                    <svg *ngIf="!form.driverSignatureImage.value" stroke="currentColor" fill="none"
+                                        viewBox="0 0 48 48" aria-hidden="true"
+                                        class="mx-auto h-12 w-12 text-main-light">
+                                        <path
+                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+
+                                </div>
+                                <a href="javascript:void(0)">
+                                    <div class="flex text-sm text-main-light">
+                                        <!-- (click)="openSigModal() -->
+                                        <label
+                                            class="relative cursor-pointer rounded-md bg-white font-medium text-main-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-main-primary focus-within:ring-offset-2 hover:text-main-primary">
+                                            <span class="text-xs" data-target="#signatureModal"
+                                                data-toggle="modal">Add/Update Signature</span>
+                                        </label>
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day Wise Shift -->
+            <details *ngIf="false" class="mt-6 border-2 border-dashed border-main-base p-2 rounded-lg w-full max-w-4xl">
+                <summary class="flex space-x-2 justify-between items-center">
+                    <h3 class="text-lg font-medium leading-6 text-main-dark">
+                        Shift (Day Wise)
+                    </h3>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                        </svg>
+                    </div>
+                </summary>
+
+            </details>
+            <!-- -----Signature end---- -->
+
+
+
+        </div>
+        <div class="pt-4">
+            <div class="flex justify-end">
+                <button type="submit" class="ml-3 btn-primary">Create</button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,192 @@
+<div class="px-2 py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <button type="button" class="btn-primary" routerLink="add">Add Vehicle</button>
+      </div>
+      <div class="flex-1 flex justify-center">
+        <span class="text-main-light text-sm whitespace-nowrap">Showing 3 entries</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <div>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="relative">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3" aria-hidden="true">
+            <svg class="mr-3 h-4 w-4 text-main-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <input type="text" name="search" id="search" class="pl-9" placeholder="Search" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+    <div class="py-2 inline-block min-w-full">
+      <div class="flow-root">
+        <div class="inline-block min-w-full align-middle">
+          <div class="shadow ring-1 ring-main-base min-h-full">
+            <table class="min-w-full divide-y divide-main-base">
+              <thead>
+                <tr class="divide-x divide-gray-200 sticky top-0 z-10">
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Actions</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Name (3)</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Rig No.</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Driver</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Model</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Capacity</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Vin</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Tracking No.</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Source</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Created At</th>
+                  <th class="border-b border-gray-300 bg-white bg-opacity-75 p-[3px] text-left text-sm font-semibold text-gray-900">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-300">
+                <tr class="divide-x divide-gray-300 group hover:bg-main-base-100 cursor-pointer">
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center items-center">
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Edit</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">QR</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Docs</a>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <a class="h-10 w-16 flex-shrink-0 border rounded border-main-base">
+                        <img class="h-full w-full rounded-full object-scale-down" src="https://via.placeholder.com/40" alt="" />
+                      </a>
+                      <div>
+                        <div class="flex space-x-1 text-xs">
+                          <span class="font-medium text-main-dark">Vehicle 1</span>
+                          <span class="text-main-light">(Type A)</span>
+                        </div>
+                        <div class="font-medium text-main-dark">123</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Rig123</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <div class="h-10 w-10 flex-shrink-0">
+                        <img class="h-full w-full rounded-full object-cover" src="https://via.placeholder.com/40" alt="" />
+                      </div>
+                      <div>
+                        <div class="font-medium text-main-dark">John Doe</div>
+                        <div class="text-main-light">john@example.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Model X</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">5</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">1HGCM82633A123456</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">TRK123456</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Lease</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">01/01/2023</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center">
+                      <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Active</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="divide-x divide-gray-300 group hover:bg-main-base-100 cursor-pointer">
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center items-center">
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Edit</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">QR</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Docs</a>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <a class="h-10 w-16 flex-shrink-0 border rounded border-main-base">
+                        <img class="h-full w-full rounded-full object-scale-down" src="https://via.placeholder.com/40" alt="" />
+                      </a>
+                      <div>
+                        <div class="flex space-x-1 text-xs">
+                          <span class="font-medium text-main-dark">Vehicle 2</span>
+                          <span class="text-main-light">(Type B)</span>
+                        </div>
+                        <div class="font-medium text-main-dark">456</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Rig456</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <div class="h-10 w-10 flex-shrink-0">
+                        <img class="h-full w-full rounded-full object-cover" src="https://via.placeholder.com/40" alt="" />
+                      </div>
+                      <div>
+                        <div class="font-medium text-main-dark">Jane Smith</div>
+                        <div class="text-main-light">jane@example.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Model Y</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">10</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">1HGCM82633A654321</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">TRK654321</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Purchase</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">02/01/2023</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center">
+                      <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Inactive</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="divide-x divide-gray-300 group hover:bg-main-base-100 cursor-pointer">
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center items-center">
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Edit</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">QR</a>
+                      <a href="javascript:void(0)" class="px-2 text-main-primary hover:text-main-primary-hover">Docs</a>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <a class="h-10 w-16 flex-shrink-0 border rounded border-main-base">
+                        <img class="h-full w-full rounded-full object-scale-down" src="https://via.placeholder.com/40" alt="" />
+                      </a>
+                      <div>
+                        <div class="flex space-x-1 text-xs">
+                          <span class="font-medium text-main-dark">Vehicle 3</span>
+                          <span class="text-main-light">(Type C)</span>
+                        </div>
+                        <div class="font-medium text-main-dark">789</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Rig789</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex items-center gap-2">
+                      <div class="h-10 w-10 flex-shrink-0">
+                        <img class="h-full w-full rounded-full object-cover" src="https://via.placeholder.com/40" alt="" />
+                      </div>
+                      <div>
+                        <div class="font-medium text-main-dark">Sam Wilson</div>
+                        <div class="text-main-light">sam@example.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Model Z</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">15</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">1HGCM82633A789012</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">TRK789012</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">Rental</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">03/01/2023</td>
+                  <td class="p-[3px] text-xs group-hover:text-gray-900">
+                    <div class="flex justify-center">
+                      <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Active</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

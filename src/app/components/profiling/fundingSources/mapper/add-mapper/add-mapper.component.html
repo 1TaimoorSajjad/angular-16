@@ -1,0 +1,109 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4  flex-1 min-h-screen bg-main-base-100">
+    <form [formGroup]="configurationsForm" (ngSubmit)="onSubmit()">
+      <div class="max-w-5xl flex flex-col gap-8">
+        <div class="card divide-y divide-main-base flex flex-col gap-8">
+          <div>
+            <div>
+                <!-- {{configurationsId ? "Edit": "Add"}} -->
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+               Add
+              </h3>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="name" class="block text-sm font-medium text-main-secondary">Funding Source</label>
+                <div class="mt-1">
+                  <ng-select formControlName="cooperate" id="cooperate" [clearable]="false"
+                  class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                  <ng-option value="">-- Select Funding Source --</ng-option>
+                  <ng-option value="">Logisticare</ng-option>
+                  <!-- <ng-option *ngFor="let item of fundingSourceList | sortBy:'asc':'displayName'" value="{{ item._id }}">{{item.displayName | capitalize}}</ng-option> -->
+                </ng-select>
+
+
+                </div>
+                <div *ngIf="form.cooperate.errors && submitted ">
+                  <div *ngIf="form.cooperate.errors.required " class="">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Funding Source is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6 items-end">
+              <ng-container *ngFor="let spaceTypeItem of spaceTypes.controls; index as spaceTypeIndex ">
+                <ng-container formGroupName="spaceTypeItem">
+
+                  <div class="sm:col-span-2 ">
+                    <label class="block text-sm font-medium text-main-secondary" for="validationCustomUsername">
+                      Space Type<span class="text-main-light">(File)</span></label>
+                    <div class="mt-1 flex gap-px">
+                      <input name="title" required type="text" class="form-control" formControlName="title" />
+                    </div>
+
+                    <!-- <div *ngIf="spaceTypeItem.controls.title.errors && submitted">
+                      <div *ngIf="spaceTypeItem.controls.title.errors.required" class="">
+                        <p class="mt-2 text-xs text-main-danger ">
+                          Space Type(File) is required
+                        </p>
+                      </div>
+                    </div> -->
+
+
+                  </div>
+
+                  <div class=" sm:col-span-2">
+                    <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Space
+                      Type<span class="text-main-light">(TP)</span></label>
+                    <div class="mt-1 flex gap-px">
+                      <ng-select formControlName="spaceType" id="spaceType" [clearable]="false" (ngModelChange)="onSelectConfigurationItem(spaceTypeItem)"
+                      class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                      <ng-option value="">-- Select Space Type --</ng-option>
+                      <ng-option value="">los</ng-option>
+                      <ng-option value="">wav</ng-option>
+
+                      <!-- <ng-option *ngFor="let item of spaceTypesList | sortBy:'asc':'title'" value="{{ item._id }}">{{item.title | capitalize}}</ng-option> -->
+                    </ng-select>
+                    </div>
+
+                    <!-- <div *ngIf="spaceTypeItem.controls.spaceType.errors && submitted ">
+                      <div *ngIf="spaceTypeItem.controls.spaceType.errors.required" class="">
+                        <p class="mt-2 text-xs text-main-danger ">
+                          SpaceType is required
+                        </p>
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <div class="">
+                    <button type="button" class="btn-danger" (click)="removeConfigurationItem(spaceTypeIndex)">Remove</button>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <div class="pt-4">
+              <div class="flex justify-end">
+                <button type="button" (click)="addConfiguration()" class="ml-3 btn-primary">+ Add</button>
+              </div>
+              <!-- <div class="flex justify-end" *ngIf="spaceTypeItem.get('title')?.errors && submitted ">
+                <p class="mt-2 text-xs text-main-danger ">
+                  Los and Space Type is required
+                </p>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <div class="flex justify-end">
+                <!-- {{configurationsId ? "Update" : "Create"}} -->
+              <button type="submit" class="ml-3 btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

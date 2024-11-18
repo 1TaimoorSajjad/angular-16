@@ -1,0 +1,67 @@
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex-1 h-full overflow-scroll">
+    <div class="max-w-7xl">
+      <form [formGroup]='tripPurposesForm' (ngSubmit)="onCreateTripPurposes()">
+  
+        <div class="grid lg:grid-cols-11 gap-8">
+          <div class="card lg:col-span-8 divide-y divide-main-base flex flex-col gap-8">
+            <div>
+              <div>
+                <h3 class="text-lg font-medium leading-6 text-main-dark">
+                  <!-- {{tripPurposesId ? 'Edit':'Add'}} -->
+                   Add
+                </h3>
+              </div>
+              <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                  <label for="title" class="block text-sm font-medium text-main-secondary">
+                      Title
+                  </label>
+                  <div class="mt-1">
+                      <input formControlName="title" type="text" name="title"
+                          id="title" />
+                  </div>
+                  <div *ngIf="form.title.errors && submitted" class="">
+                    <div *ngIf="form.title.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger ">
+                        Title is required
+                      </p>
+                    </div>
+                  </div>
+              </div>
+                <div class="sm:col-span-3">
+                  <label for="account-status" class="block text-sm font-medium text-main-secondary">Select Status</label>
+                  <div class="mt-1">
+                    <select formControlName="status" data-toggle="select2">
+                      <option value="" class="">-- Select Status --</option>
+                      <option value="" class="active">Active</option>
+                      <option value="" class="inactive">In Active</option>
+                      <!-- <option *ngFor='let AccountStatus of getAccountStatus() | keyvalue' value='{{AccountStatus.key}}'>
+                        {{AccountStatus.value}}</option> -->
+                    </select>
+                  </div>
+  
+                  <div *ngIf="form.status.errors && submitted" class="">
+                    <div *ngIf="form.status.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger ">
+                        Account status is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-8">
+              <div class="flex justify-end">
+                <button type="submit" class="ml-3 btn-primary">
+                    <!-- {{tripPurposesId ? 'Update':'Create'}} -->
+                     Create
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  
+    </div>
+  </div>
+  

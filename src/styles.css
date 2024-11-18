@@ -1,0 +1,332 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+@import 'ngx-toastr/toastr';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* container color */
+    --color-container-base: 255, 255, 255;
+
+    /* Navbar colors */
+    --color-nav-text-base: 239, 243, 247;
+    --color-nav-text-light: 255, 255, 255;
+    --color-nav-text-dark: 239, 243, 247;
+    --color-nav-bg-base: 41, 52, 98;
+    --color-nav-bg-light: 53, 67, 127;
+    --color-nav-bg-dark: 41, 52, 98;
+    --color-nav-svg-text-light: 255, 255, 255;
+    --color-nav-svg-text-dark: 204, 213, 226;
+    --color-nav-border-base: 226, 232, 240;
+    /* Header colors */
+    --color-header-text-primary: 99, 102, 242;
+    --color-header-text-light: 100, 116, 139;
+    --color-header-text-dark: 15, 23, 42;
+    --color-header-text-hover-light: 51, 65, 85;
+    --color-header-border-primary: 80, 99, 182;
+    --color-header-border-hover-light: 203, 213, 225;
+    --color-header-bg-base: 255, 255, 255;
+    --color-header-bg-hover-btn: 243, 244, 246;
+    /* Dashboard stats Colors */
+    --color-dashboard-stats-text-primary: 79, 70, 229;
+    --color-dashboard-stats-text-secondary: 76, 85, 100;
+    --color-dashboard-stats-text-success: 22, 163, 74;
+    --color-dashboard-stats-text-danger: 220, 38, 38;
+    --color-dashboard-stats-text-info: 71, 85, 105;
+    /*Dashboard stats background Colors */
+    --color-dashboard-stats-primary-bg-light: 238, 242, 255;
+    --color-dashboard-stats-primary-bg-dark: 199, 210, 254;
+    --color-dashboard-stats-secondary-bg-light: 249, 250, 251;
+    --color-dashboard-stats-secondary-bg-dark: 229, 231, 235;
+    --color-dashboard-stats-success-bg-light: 241, 253, 244;
+    --color-dashboard-stats-success-bg-dark: 187, 247, 208;
+    --color-dashboard-stats-danger-bg-light: 254, 242, 242;
+    --color-dashboard-stats-danger-bg-dark: 254, 202, 202;
+
+    /* Main Colors */
+    --color-main-base-50: 248, 250, 252;
+    --color-main-base-100: 241, 245, 249;
+    --color-main-base: 226, 232, 240;
+    --color-main-primary: 80, 99, 182;
+    --color-main-primary-100: 230, 204, 255;
+    --color-main-primary-hover: 23, 111, 182;
+    --color-main-secondary: 51, 65, 85;
+    --color-main-light: 100, 116, 139;
+    --color-main-dark: 15, 23, 42;
+    --color-main-danger: 239, 56, 54;
+    --color-main-danger-100: 254, 226, 226;
+    --color-main-success: 22, 163, 74;
+    --color-main-success-100: 220, 252, 231;
+
+    /* Main Background Color */
+    --color-main-imageplaceholder-bg-imageplaceholder: 241, 245, 249;
+
+    /* Status Rounded Colors */
+    --color-status-online-bg-light: 34, 197, 94;
+    --color-status-online-bg-dark: 22, 163, 74;
+    --color-status-offline-bg-light: 100, 116, 139;
+    --color-status-offline-bg-dark: 71, 85, 105;
+    --color-status-busy-bg-light: 239, 68, 68;
+    --color-status-busy-bg-dark: 220, 38, 38;
+
+    /* Border, ring COlors */
+    --color-main-border-primary: 79, 70, 229;
+
+    /* Badges */
+    --color-badge-bg-primary: 80, 99, 182;
+    --color-badge-bg-secondary: 194, 57, 179;
+    --color-badge-bg-info: 23, 138, 158;
+    --color-badge-bg-success: 23, 220, 144;
+    --color-badge-bg-danger: 239, 56, 54;
+    --color-badge-bg-light: 110, 133, 178;
+    --color-badge-bg-dark: 15, 23, 42;
+  }
+
+  .theme-blue {
+    /* container color */
+    --color-container-base: 255, 255, 255;
+
+    /* Navbar colors */
+    --color-nav-text-base: 239, 243, 247;
+    --color-nav-text-light: 255, 255, 255;
+    --color-nav-text-dark: 239, 243, 247;
+    --color-nav-bg-base: 4, 152, 213;
+    --color-nav-bg-light: 52, 176, 229;
+    --color-nav-bg-dark: 4, 152, 213;
+    --color-nav-svg-text-light: 255, 255, 255;
+    --color-nav-svg-text-dark: 204, 213, 226;
+    --color-nav-border-base: 226, 232, 240;
+    /* Header colors */
+    --color-header-text-primary: 99, 102, 242;
+    --color-header-text-light: 100, 116, 139;
+    --color-header-text-dark: 15, 23, 42;
+    --color-header-text-hover-light: 51, 65, 85;
+    --color-header-border-primary: 4, 152, 213;
+    --color-header-border-hover-light: 203, 213, 225;
+    --color-header-bg-base: 255, 255, 255;
+    --color-header-bg-hover-btn: 243, 244, 246;
+    /* Dashboard stats Colors */
+    --color-dashboard-stats-text-primary: 79, 70, 229;
+    --color-dashboard-stats-text-secondary: 76, 85, 100;
+    --color-dashboard-stats-text-success: 22, 163, 74;
+    --color-dashboard-stats-text-danger: 220, 38, 38;
+    --color-dashboard-stats-text-info: 71, 85, 105;
+    /*Dashboard stats background Colors */
+    --color-dashboard-stats-primary-bg-light: 238, 242, 255;
+    --color-dashboard-stats-primary-bg-dark: 199, 210, 254;
+    --color-dashboard-stats-secondary-bg-light: 249, 250, 251;
+    --color-dashboard-stats-secondary-bg-dark: 229, 231, 235;
+    --color-dashboard-stats-success-bg-light: 241, 253, 244;
+    --color-dashboard-stats-success-bg-dark: 187, 247, 208;
+    --color-dashboard-stats-danger-bg-light: 254, 242, 242;
+    --color-dashboard-stats-danger-bg-dark: 254, 202, 202;
+
+    /* Main Colors */
+    --color-main-base-50: 248, 250, 252;
+    --color-main-base-100: 241, 245, 249;
+    --color-main-base: 226, 232, 240;
+    --color-main-primary: 4, 152, 213;
+    --color-main-primary-100: 230, 204, 255;
+    --color-main-primary-hover: 23, 111, 182;
+    --color-main-secondary: 51, 65, 85;
+    --color-main-light: 100, 116, 139;
+    --color-main-dark: 15, 23, 42;
+    --color-main-danger: 239, 56, 54;
+    --color-main-danger-100: 254, 226, 226;
+    --color-main-success: 22, 163, 74;
+    --color-main-success-100: 220, 252, 231;
+
+    /* Main Background Color */
+    --color-main-imageplaceholder-bg-imageplaceholder: 241, 245, 249;
+
+    /* Status Rounded Colors */
+    --color-status-online-bg-light: 34, 197, 94;
+    --color-status-online-bg-dark: 22, 163, 74;
+    --color-status-offline-bg-light: 100, 116, 139;
+    --color-status-offline-bg-dark: 71, 85, 105;
+    --color-status-busy-bg-light: 239, 68, 68;
+    --color-status-busy-bg-dark: 220, 38, 38;
+
+    /* Border, ring COlors */
+    --color-main-border-primary: 79, 70, 229;
+
+    /* Badges */
+    --color-badge-bg-primary: 4, 152, 213;
+    --color-badge-bg-secondary: 194, 57, 179;
+    --color-badge-bg-info: 23, 138, 158;
+    --color-badge-bg-success: 23, 220, 144;
+    --color-badge-bg-danger: 239, 56, 54;
+    --color-badge-bg-light: 110, 133, 178;
+    --color-badge-bg-dark: 15, 23, 42;
+  }
+
+  .theme-olive {
+    /* container color */
+    --color-container-base: 255, 255, 255;
+
+    /* Navbar colors */
+    --color-nav-text-base: 239, 243, 247;
+    --color-nav-text-light: 255, 255, 255;
+    --color-nav-text-dark: 239, 243, 247;
+    --color-nav-bg-base: 8, 131, 149;
+    --color-nav-bg-light: 0, 166, 186;
+    --color-nav-bg-dark: 8, 131, 149;
+    --color-nav-svg-text-light: 255, 255, 255;
+    --color-nav-svg-text-dark: 204, 213, 226;
+    --color-nav-border-base: 226, 232, 240;
+    /* Header colors */
+    --color-header-text-primary: 99, 102, 242;
+    --color-header-text-light: 100, 116, 139;
+    --color-header-text-dark: 15, 23, 42;
+    --color-header-text-hover-light: 51, 65, 85;
+    --color-header-border-primary: 8, 131, 149;
+    --color-header-border-hover-light: 203, 213, 225;
+    --color-header-bg-base: 255, 255, 255;
+    --color-header-bg-hover-btn: 243, 244, 246;
+    /* Dashboard stats Colors */
+    --color-dashboard-stats-text-primary: 79, 70, 229;
+    --color-dashboard-stats-text-secondary: 76, 85, 100;
+    --color-dashboard-stats-text-success: 22, 163, 74;
+    --color-dashboard-stats-text-danger: 220, 38, 38;
+    --color-dashboard-stats-text-info: 71, 85, 105;
+    /*Dashboard stats background Colors */
+    --color-dashboard-stats-primary-bg-light: 238, 242, 255;
+    --color-dashboard-stats-primary-bg-dark: 199, 210, 254;
+    --color-dashboard-stats-secondary-bg-light: 249, 250, 251;
+    --color-dashboard-stats-secondary-bg-dark: 229, 231, 235;
+    --color-dashboard-stats-success-bg-light: 241, 253, 244;
+    --color-dashboard-stats-success-bg-dark: 187, 247, 208;
+    --color-dashboard-stats-danger-bg-light: 254, 242, 242;
+    --color-dashboard-stats-danger-bg-dark: 254, 202, 202;
+
+    /* Main Colors */
+    --color-main-base-50: 248, 250, 252;
+    --color-main-base-100: 241, 245, 249;
+    --color-main-base: 226, 232, 240;
+    --color-main-primary: 8, 131, 149;
+    --color-main-primary-100: 230, 204, 255;
+    --color-main-primary-hover: 23, 111, 182;
+    --color-main-secondary: 51, 65, 85;
+    --color-main-light: 100, 116, 139;
+    --color-main-dark: 15, 23, 42;
+    --color-main-danger: 239, 56, 54;
+    --color-main-danger-100: 254, 226, 226;
+    --color-main-success: 22, 163, 74;
+    --color-main-success-100: 220, 252, 231;
+
+    /* Main Background Color */
+    --color-main-imageplaceholder-bg-imageplaceholder: 241, 245, 249;
+
+    /* Status Rounded Colors */
+    --color-status-online-bg-light: 34, 197, 94;
+    --color-status-online-bg-dark: 22, 163, 74;
+    --color-status-offline-bg-light: 100, 116, 139;
+    --color-status-offline-bg-dark: 71, 85, 105;
+    --color-status-busy-bg-light: 239, 68, 68;
+    --color-status-busy-bg-dark: 220, 38, 38;
+
+    /* Border, ring COlors */
+    --color-main-border-primary: 79, 70, 229;
+
+    /* Badges */
+    --color-badge-bg-primary: 8, 131, 149;
+    --color-badge-bg-secondary: 194, 57, 179;
+    --color-badge-bg-info: 23, 138, 158;
+    --color-badge-bg-success: 23, 220, 144;
+    --color-badge-bg-danger: 239, 56, 54;
+    --color-badge-bg-light: 110, 133, 178;
+    --color-badge-bg-dark: 15, 23, 42;
+  }
+
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select {
+    @apply block w-full rounded-md text-main-secondary placeholder:text-main-light border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm py-2;
+  }
+
+  [type="checkbox"] {
+    @apply border-gray-300 rounded text-main-primary focus:ring-main-primary;
+  }
+
+  [type="radio"] {
+    @apply border-gray-300 rounded-full text-main-primary focus:ring-main-primary;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-main-primary px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-main-primary/90 focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-main-danger px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-main-danger/90 focus:outline-none focus:ring-2 focus:ring-main-danger focus:ring-offset-2;
+  }
+
+  .btn-white {
+    @apply inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-main-secondary shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2;
+  }
+
+  /* Cards */
+  .card {
+    @apply p-4 sm:p-6 bg-container-base rounded-lg;
+  }
+
+  /* profile Timezone */
+  .select2-container--default .select2-selection--single {
+    @apply w-full rounded-md text-main-secondary placeholder:text-main-light border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm py-2 h-[38px] flex items-center !important;
+  }
+
+  .select2-container--default .select2-results__option[aria-selected="true"] {
+    @apply bg-main-base-100 !important;
+  }
+
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    @apply bg-main-primary !important;
+  }
+
+
+  /* toast succes and calendar */
+
+  .toast-success {
+    @apply bg-main-primary !important;
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    @apply bg-main-primary !important;
+  }
+
+  .swal2-styled.swal2-confirm {
+    @apply bg-main-danger !important;
+  }
+
+  .swal2-styled.swal2-cancel {
+    @apply bg-main-primary !important;
+  }
+
+  .ngx-overlay {
+    @apply hidden !important
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  app-mapview {
+    @apply flex flex-col h-full;
+  }
+}

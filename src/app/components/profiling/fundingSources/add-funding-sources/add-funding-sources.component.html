@@ -1,0 +1,380 @@
+<!-- New code -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex-1">
+    <form [formGroup]="fundingSourceForm" class="needs-validation" novalidate (ngSubmit)="addNewFundingSource()">
+        <div class="max-w-5xl flex flex-col gap-8">
+            <div class="card divide-y divide-main-base flex flex-col gap-8">
+                <div>
+                    <div>
+                        <h3 class="text-lg font-medium leading-6 text-main-dark" for="displayName">
+                            {{fundingSourceId ? 'Edit' : 'Add'}}
+                           
+                        </h3>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label for="displayName" class="block text-sm font-medium text-main-secondary">Display
+                                Name</label>
+                            <div class="mt-1">
+                                <input type="text" class="form-control" name="displayName" id="displayName"
+                                    formControlName="displayName" value=""  />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.displayName.errors && submitted">
+                                <span *ngIf="form.displayName.errors.required">Name is Required</span>
+                                <span *ngIf="form.displayName.errors.minlength">Length must be 3</span>
+
+                            </p>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="contactNumber" class="block text-sm font-medium text-main-secondary">Contact
+                                Number</label>
+                            <div class="mt-1">
+                                <input type="text" name="contactNumber" id="contactNumber"
+                                    class="form-control" formControlName="contactNumber" autocomplete="off"  />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.contactNumber.errors && submitted">
+                                <span *ngIf="form.contactNumber.errors.required" class="error"> Phone is Required
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="tollFreeNumber" class="block text-sm font-medium text-main-secondary">Toll-Free Number</label>
+                            <div class="mt-1">
+                                <input type="text" name="tollFreeNumber" id="tollFreeNumber"
+                                    class="form-control" formControlName="tollFreeNumber" autocomplete="off"  />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.tollFreeNumber.errors && submitted">
+                                <span *ngIf="form.tollFreeNumber.errors.required" class="error"> Toll-Free Number is Required
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="address" class="block text-sm font-medium text-main-secondary">Address</label>
+                            <div class="mt-1">
+                                <input type="text" class="form-control" name="address" id="address" google-place
+                                    formControlName='address' placeholder="" (onSelect)="getAddress($event)" />
+                            </div>
+                            <div *ngIf="(form.address.errors || form.latitude.errors) && submitted">
+                                <div *ngIf="(form.address.errors && form.address.errors.required) ||
+                                            (form.latitude.errors && form.latitude.errors.required)">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Address is required
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sm:col-span-3">
+                            <label for="priority" class="block text-sm font-medium text-main-secondary">Priority
+                                </label>
+                            <div class="mt-1">
+                                <input type="number" name="priority" id="priority"
+                                    class="form-control" formControlName="priority" autocomplete="off"  />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.priority.errors && submitted">
+                                <span *ngIf="form.priority.errors.required" class="error"> Priority is Required
+                                </span>
+                            </p>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <!-- <app-broker-dropdown [preSelected]="form.companyType.value" (selectedBroker)="onSelectBroker($event)"></app-broker-dropdown> -->
+                          </div>
+
+                        <div class="sm:col-span-6">
+                            <label for="image" class="block text-sm font-medium text-main-secondary">Profile
+                                Image</label>
+                            <div class="relative overflow-hidden rounded-full inline-flex mt-1">
+                                <img *ngIf="profileImageURL" [src]="profileImageURL" alt="user-image"
+                                    class="relative h-32 w-32 rounded-full border border-main-base" />
+                                    <img *ngIf="!profileImageURL" [src]="'assets/images/placeholders/corporate-placeholder.png'"
+                                    alt="user-image" class="relative h-32 w-32 rounded-full border border-main-base" />
+
+                                <label for="desktop-user-photo"
+                                    class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100">
+                                    <span>Change</span>
+                                    <span class="sr-only"> user photo</span>
+
+                                    <input
+                                    #imageInput type="file" accept="image/*" style="width: 100%;" [hidden]="true"
+                                    (change)="processFile(imageInput)" id="desktop-user-photo" name="user-photo"
+                                        class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-main-base opacity-0" />
+                                </label>
+
+                            </div>
+                            <div *ngIf="(selectedFile === null && profileImageURL === null) && submitted" class="error">
+                                <p class="mt-2 text-xs text-main-danger">
+                                    Profile Image is Required
+                                </p></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="pt-8">
+                    <div>
+                      <h3 class="text-lg font-medium leading-6 text-main-dark">
+                        Focal Person Information
+                      </h3>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                      <ng-container formGroupName="focalPerson">
+                        <div class="sm:col-span-3">
+                          <label for="location" class="block text-sm font-medium text-main-secondary">Focal Person <span class="text-main-light">(1)</span></label>
+                          <div class="mt-1">
+                            <input type="text" class="disabled:bg-main-base"  formControlName='personeNameOne' name="personName1" id="personName1" />
+                          </div>
+                        </div>
+                        <div class="sm:col-span-3">
+                          <label for="location" class="block text-sm font-medium text-main-secondary">Phone Number</label>
+                          <div class="mt-1">
+                            <input type="text"  class="disabled:bg-main-base"  formControlName='personNumberOne' name="personNumber1" id="personNumber1" />
+                          </div>
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="location" class="block text-sm font-medium text-main-secondary">Focal Person <span class="text-main-light">(2)</span></label>
+                            <div class="mt-1">
+                              <input type="text" class="disabled:bg-main-base"  formControlName='personeNameTwo' name="personName2" id="personName2" />
+                            </div>
+                          </div>
+                          <div class="sm:col-span-3">
+                            <label for="location" class="block text-sm font-medium text-main-secondary">Phone Number</label>
+                            <div class="mt-1">
+                              <input type="text"  class="disabled:bg-main-base"  formControlName='personNumberTwo' name="personNumber2" id="personNumber2" />
+                            </div>
+                          </div>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                <div class="pt-8">
+                    <div>
+                        <h3 class="text-lg font-medium leading-6 text-main-dark" for="displayName">
+                            Legal Information
+                        </h3>
+                        <p class="mt-1 text-sm text-main-light">
+                            Use a permanent address where you can receive mail.
+                        </p>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label for="accountStatus" class="block text-sm font-medium text-main-secondary">Status</label>
+                            <div class="mt-1">
+                                <select formControlName="accountStatus" class="form-control" data-toggle="select2"
+                                    id="accountStatus" name="accountStatus">
+                                    <option selected value="">-- Select Status --</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">In Active</option>
+                                </select>
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.accountStatus.errors && submitted">
+                                <span *ngIf="form.accountStatus.errors.required">Status is
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="email" class="block text-sm font-medium text-main-secondary">Email
+                                Address</label>
+                            <div class="mt-1 relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <!-- Heroicon name: mini/envelope -->
+                                    <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path
+                                            d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
+                                        <path
+                                            d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+                                    </svg>
+                                </div>
+                                <input type="email" class="form-control pl-10" autocomplete="off" name="email"  id="email"
+                                    formControlName="email" />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger " *ngIf="form.email.errors && submitted">
+                                <span *ngIf="form.email.errors.required">Email is Required</span>
+                                <span *ngIf="form.email.errors.email">Email is not valid</span>
+                            </p>
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="password" class="block text-sm font-medium text-main-secondary">Password</label>
+                            <div class="mt-1 relative">
+                                <div class="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3"
+                                    (click)="togglePasswordType()">
+                                    <!-- Heroicon name: mini/envelope -->
+
+                                    <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                        *ngIf="passwordToggleFlag">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+
+                                    <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                        *ngIf="!passwordToggleFlag">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+                                </div>
+                                <input [type]="passwordType" formControlName="password" autocomplete="off" class="form-control pr-10"
+                                    name="password" id="password" />
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.password.errors && submitted">
+                                <span *ngIf="form.password.errors.required">
+
+                                    Password is required
+                                </span>
+                                <span *ngIf="form.password.errors.minlength">
+                                    Password must be atleast 6 characters
+                                </span>
+                                <span *ngIf="form.password.errors.maxlength">
+                                    Password must be maximum of 16 characters
+                                </span>
+                            </p>
+                        </div>
+
+
+
+                        <!-- <div class="sm:col-span-4">
+                            <label for="associateTo" class="block text-sm font-medium text-main-secondary">Associate
+                                To</label>
+                            <div class="mt-1">
+                                <select formControlName="associateTo" class="form-control" data-toggle="select2"
+                                    id="associateTo" name="associateTo">
+                                    <option selected value="">-- Select Corporate --</option>
+                                    <option *ngFor="let corporate of corporateUsers" value="{{corporate._id}}">
+                                        {{corporate.displayName}}
+                                    </option>
+                                </select>
+                            </div>
+                            <p class="mt-2 text-xs text-main-danger" *ngIf="form.associateTo.errors && submitted">
+                                <span *ngIf="form.associateTo.errors.required">Associate To is
+                                    Required
+                                </span>
+                            </p>
+                        </div> -->
+
+
+                        <div  class="sm:col-span-3">
+                            <label for="password" class="block text-sm font-medium text-main-secondary">Required Odometers</label>
+                            <div class="mt-1 relative">
+                                <select formControlName="requiredOdometers" type="text"
+                                class="form-control">
+                                    <option selected value="0"> --Select Required Odometer--</option>
+                                    <option selected value="0">100</option>
+                                    <option selected value="0">105</option>
+                                    <option selected value="0">110</option>
+                                    <!-- <option *ngFor="let odometer of odometers" value="{{ odometer.id }}">
+                                        {{ odometer.text }}</option> -->
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="sm:col-span-3">
+                            <label for="password" class="block text-sm font-medium text-main-secondary">Take Signature </label>
+                            <div class="mt-1 relative">
+                                <div>
+                                    <button (click)="toggleSignature()" [ngClass]="form.takeSignaturesOnly.value ? 'bg-main-primary' : 'bg-main-light/50'"
+                                        type="button"
+                                        class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                                        role="switch" aria-checked="false">
+                                        <span class="sr-only">Use setting</span>
+                                        <span [ngClass]="form.takeSignaturesOnly.value ? 'translate-x-5' : 'translate-x-0'"
+                                            class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                                            <span
+                                                [ngClass]="form.takeSignaturesOnly.value ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                                aria-hidden="true">
+                                                <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                                                    <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </span>
+                                            <span
+                                                [ngClass]="form.takeSignaturesOnly.value ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                                aria-hidden="true">
+                                                <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                                                    <path
+                                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                                </svg>
+                                            </span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="sm:col-span-3">
+                            <label for="password" class="block text-sm font-medium text-main-secondary">Display Mode</label>
+                            <div class="mt-1 relative">
+                                <select formControlName="displayMode" type="text"
+                                    class="form-control">
+                                    <option value="none">None</option>
+                                    <option value="signature">Signature</option>
+                                    <option value="fare">Fare</option>
+
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <!-- Form 837 Toggle -->
+                        <div class="sm:col-span-3">
+                            <label for="requireForm837"  class="block text-sm font-medium text-main-secondary">Form 837</label>
+                            <div class="mt-1 relative">
+                                <div>
+                                    <button (click)="toggleForm837()" [ngClass]="form.requireForm837.value ? 'bg-main-primary' : 'bg-main-light/50'"
+                                        type="button"
+                                        class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                                        role="switch" aria-checked="false">
+                                        <span class="sr-only">Use setting</span>
+                                        <span [ngClass]="form.requireForm837.value ? 'translate-x-5' : 'translate-x-0'"
+                                            class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                                            <span
+                                                [ngClass]="form.requireForm837.value ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                                aria-hidden="true">
+                                                <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                                                    <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </span>
+                                            <span
+                                                [ngClass]="form.requireForm837.value ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                                aria-hidden="true">
+                                                <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                                                    <path
+                                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                                </svg>
+                                            </span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="pt-8">
+                    <div class="flex justify-end">
+                       
+                        <button type="submit" class="ml-3 btn-primary">
+                            {{fundingSourceId ? 'Update' : 'Create'}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

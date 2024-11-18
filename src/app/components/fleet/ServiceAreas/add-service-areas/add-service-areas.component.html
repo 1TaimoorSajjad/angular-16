@@ -1,0 +1,119 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4  flex-1 min-h-screen bg-main-base-100">
+    <form [formGroup]="serviceAreaForm" (ngSubmit)="saveServiceArea()">
+      <div class="max-w-5xl flex flex-col gap-8">
+        <div class="card divide-y divide-main-base flex flex-col gap-8">
+          <div>
+            <div>
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+                <!-- {{serviceAreaId ? 'Edit' : 'Add'}} -->
+                 Add
+              </h3>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="display-name" class="block text-sm font-medium text-main-secondary">Display Name</label>
+                <div class="mt-1">
+                  <input type="text" formControlName="name" name="display-name" id="display-name" />
+                </div>
+                <div *ngIf="form.name.errors && submitted">
+                  <div *ngIf="form.name.errors.required" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Name is Required
+                    </p>
+                  </div>
+                  <div *ngIf="form.name.errors.minlength" class="">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Length must be 3
+                    </p>
+                  </div>
+                </div>
+  
+              </div>
+              <div class="sm:col-span-3">
+                <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                <div class="mt-1">
+                  <select id="status" formControlName="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div *ngIf="form.status.errors && submitted">
+                  <div *ngIf="form.status.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-6">
+                <div
+                  class="w-full grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-6 border-2 border-main-base border-dashed p-4 rounded-lg">
+                  <div [formGroup]="zipCodeForm" novalidate class="sm:col-span-3">
+                    <div class="" show-errors>
+                      <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Zip
+                        Code</label>
+                      <div class="mt-1 flex gap-px">
+                        <input name="zoneToindex + 1" required type="text" class="rounded-none rounded-l-md" (input)="onInputChange($event)" formControlName="zipCode" />
+  
+                        <button  type="button" (click)="addZipCode()"
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-primary bg-main-primary px-3 text-white sm:text-xs">Add
+                        </button>
+                      </div>
+  
+                      <div *ngIf="formControl.zipCode.errors">
+                        <div *ngIf="formControl.zipCode.errors.required && zipCodeSubmitted " class="">
+                          <p class="mt-2 text-xs text-main-danger ">
+                            Zip Code is required
+                          </p>
+                        </div>
+                      </div>
+  
+  
+                    </div>
+                  </div>
+                  <div class="sm:col-span-6">
+                    <div class="flex flex-wrap gap-1">
+                      <div *ngFor="let zipCode of form.zipCodes.value;  index as index" class="inline-flex w-auto">
+                        <div class="inline-flex w-auto">
+                          <div class="flex gap-px" show-errors>
+                            <div class="inline-flex items-center gap-x-0.5 rounded-md bg-main-base-100 hover:bg-main-base px-2 py-1 text-xs font-medium text-main-dark ring-1 ring-inset ring-main-base space-x-1">
+                              <span class="leading-0">
+                                {{zipCode}}
+                              </span>
+                              <button type="button"
+                                class="group relative h-4 w-4 rounded-full bg-main-light text-white flex justify-center items-center cursor-pointer"
+                                (click)="removeZipCode(index)">
+                                <span class="sr-only">Remove</span>
+                                <svg viewBox="0 0 14 14"
+                                  class="h-3 w-3 stroke-white">
+                                  <path d="M4 4l6 6m0-6l-6 6" />
+                                </svg>
+                                <span class="absolute -inset-1"></span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+          <div class="pt-8">
+            <div class="flex justify-end">
+                <!-- {{serviceAreaId ? 'Update' : 'Create'}} -->
+              <button type="submit" class="ml-3 btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  
+  <!-- ----New Code end --- -->
+  

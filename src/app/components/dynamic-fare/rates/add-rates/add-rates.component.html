@@ -1,0 +1,567 @@
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex-1 min-h-full">
+    <form class="max-w-7xl" [formGroup]="fareForm" (ngSubmit)="onSubmit()">
+      <div class="grid lg:grid-cols-11 gap-8">
+        <div class="card lg:col-span-8 divide-y divide-main-base flex flex-col gap-8 min-h-[85vh]">
+          <div>
+  
+            <div>
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+                <!-- {{fareId ? 'Edit' : 'Add'}} -->
+                 Add
+              </h3>
+            </div>
+              <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div class="sm:col-span-6">
+                  <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+  
+                    <!-- Selectors -->
+                    <div class="sm:col-span-2">
+                      <label for="fundingSource" class="block text-sm font-medium text-main-secondary">Funding Source</label>
+                      <div class="mt-1">
+                        <select formControlName="cooperate" id="fundingSource">
+                          <option value="">-- Select Funding Source --</option>
+                          <option value="1">1</option>
+                          <option value="2">3</option>
+                          <option value="3">3</option>
+                          <!-- <option *ngFor="let fundingSource of fundingSourceList | sortBy:'asc':'displayName'" value="{{ fundingSource._id }}">{{fundingSource.displayName | capitalize}}</option> -->
+                        </select>
+                      </div>
+                      <div *ngIf="form.cooperate.errors && submitted">
+                        <div *ngIf="form.cooperate.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Funding Source is required
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                      <label for="los" class="block text-sm font-medium text-main-secondary">Level of Service</label>
+                      <div class="mt-1">
+                        <select id="los" formControlName="los" (change)="onSelectLOS($event)">
+                          <option value="">-- Select Level of Service --</option>
+                          <option value="wav">wav</option>
+                          <option value="amb">amb</option>
+                          <!-- <option *ngFor="let los of levelOfServiceList" value="{{los._id}}">{{los.title | capitalize}}</option> -->
+                        </select>
+                      </div>
+                      <div *ngIf="form.los.errors && submitted">
+                        <div *ngIf="form.los.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Level of Service is required
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="sm:col-span-2">
+                      <label for="spaceType" class="block text-sm font-medium text-main-secondary">Space Type</label>
+                      <div class="mt-1">
+                        <select id="spaceType" formControlName="spaceType" >
+                          <option value="">-- Select Space Type --</option>
+                          <option value="">ACC</option>
+                          <option value="">odd</option>
+                          <!-- <option *ngFor="let spaceType of spaceTypeList" value="{{spaceType._id}}">{{spaceType.title | capitalize}}</option> -->
+                        </select>
+                      </div>
+                      <div *ngIf="form.spaceType.errors && submitted">
+                        <div *ngIf="form.spaceType.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Space Type is required
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ----Start end  Date----- -->
+  
+                    <div class="sm:col-span-2">
+                      <label for="Address" class="block text-sm font-medium text-main-secondary">Start Time
+                      </label>
+                      <div class="mt-1 relative">
+                        <input type="text" name="preStartTime" id="preStartTime" formControlName="preStartTime"
+                          [owlDateTime]="startTime" (ngModelChange)="setStartTimeChange($event)" [readonly]="true"
+                          [owlDateTimeTrigger]="startTime" [max]="form.preEndTime.value"/>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <span class="text-gray-500 sm:text-sm" id="price-currency">
+  
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" h-5 w-5 text-main-light">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+  
+                          </span>
+                        </div>
+                      </div>
+                      <div *ngIf="form.preStartTime.errors && submitted">
+                        <div *ngIf="form.preStartTime.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Start Time is required
+                          </p>
+                        </div>
+                      </div>
+                      <owl-date-time #startTime [pickerType]="'timer'"></owl-date-time>
+                    </div>
+  
+                    <div class="sm:col-span-2">
+                      <label for="Address" class="block text-sm font-medium text-main-secondary">End Time
+                      </label>
+                      <div class="mt-1 relative">
+                        <input type="text" name="preEndTime" id="preEndTime" formControlName="preEndTime"
+                          [owlDateTime]="endDate" (ngModelChange)="setEndTimeChange($event)" [readonly]="true"
+                          [owlDateTimeTrigger]="endDate" [min]="form.preStartTime.value"/>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <span class="text-gray-500 sm:text-sm" id="price-currency">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" h-5 w-5 text-main-light">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                      <div *ngIf="form.preEndTime.errors && submitted">
+                        <div *ngIf="form.preEndTime.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            End Time is required
+                          </p>
+                        </div>
+                      </div>
+                      <owl-date-time #endDate [pickerType]="'timer'"></owl-date-time>
+                    </div>
+  
+                    <div class="sm:col-span-2">
+                      <label for="tripReason" class="block text-sm font-medium text-main-secondary">Day(s)</label>
+                      <div class="mt-1">
+                        <ng-select [items]="daysList" formControlName="days" [clearable]="false" [multiple]="true"
+                          [closeOnSelect]="false" bindValue="day" bindLabel="label" placeholder="-- Select Day --"
+                          class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+                          [searchable]="true">
+  
+                          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                              [ngModel]="item$.selected" /> {{item.label}}
+                          </ng-template>
+                        </ng-select>
+                      </div>
+                      <div *ngIf="form.days.errors && submitted">
+                        <div *ngIf="form.days.errors.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Day(s) is required
+                          </p>
+                        </div>
+                      </div>
+  
+                    </div>
+                    <!-- ----End Date----- -->
+  
+                    <div class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" formGroupName="baseFare">
+                      <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Base
+                        Fare</label>
+                      <div class="mt-1 flex gap-px inputFareCover input-group" show-errors>
+                        <span
+                          class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                        <input name="baseFare" required type="number" aria-label="Amount (to the nearest dollar)"
+                          formControlName="fare"
+                          class="block w-full min-w-0 flex-1 rounded-none rounded-r-md form-control" />
+                      </div>
+                      <p *ngIf="baseFareControls.fare.errors?.required && submitted"
+                       class="mt-2 text-xs text-main-danger">
+                        Base Fare is required
+                      </p>
+                    </div>
+  
+                    <div class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" formGroupName="baseFare">
+                      <label for="base-for" class="block text-sm font-medium text-main-secondary">For</label>
+                      <div class="mt-1 flex gap-px inputFareCover input-group" show-errors>
+                        <input name="baseFor" required type="number" class="form-control"
+                          aria-label="Amount (to the nearest dollar)" formControlName="for"
+                          class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                        <span
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">Mile</span>
+                      </div>
+                      <p *ngIf="baseFareControls.for.errors?.required && submitted"
+                       class="mt-2 text-xs text-main-danger">
+                      Miles is required
+                      </p>
+                    </div>
+  
+                    <div class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2">
+                      <div class="flex justify-between items-center mt-8">
+                        <div class="flex flex-row">
+                          <button (click)="toggleZonePerMile()"
+                            [ngClass]="form.isPerMileZone.value ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                            class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                            role="switch" aria-checked="false">
+                            <span class="sr-only">Use setting</span>
+                            <span [ngClass]="form.isPerMileZone.value ? 'translate-x-5' : 'translate-x-0'"
+                              class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                              <span
+                                [ngClass]="form.isPerMileZone.value ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                aria-hidden="true">
+                                <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                                  <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span
+                                [ngClass]="form.isPerMileZone.value ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                                class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                aria-hidden="true">
+                                <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                                  <path
+                                    d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                </svg>
+                              </span>
+                            </span>
+                          </button>
+                          <div class="ml-2 block text-sm font-medium text-main-secondary">Calculate Zone Per Mile</div>
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>
+  
+  
+                <!-- Added Zones -->
+  
+                <div class="sm:col-span-6 inputFareCover" *ngFor="let zone of form.zones.value;  index as index">
+                  <form [formGroup]="zoneFareForm" novalidate class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2 form-group" show-errors>
+                      <label class="block text-sm font-medium text-main-secondary" for="validationCustomUsername">Zone {{
+                        index + 1 }}</label>
+                      <div class="mt-1 flex gap-px">
+                        <span
+                          class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                        <input name="zoneFare index + 1 " required readonly type="number" class="form-control"
+                          value="{{ zone.fare }}" />
+                      </div>
+                      <!-- <p class="mt-2 text-xs text-main-danger " *ngIf="
+                zoneForm.fare.errors?.required &&
+                singleZoneFormSubmitted
+              ">
+              Zone For is required
+                </p> -->
+                    </div>
+                    <div class="form-group sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" show-errors>
+                      <label for="validationCustomUsername"
+                        class="block text-sm font-medium text-main-secondary">From</label>
+                      <div class="mt-1 flex gap-px">
+                        <input name="zoneFrom{{ index + 1 }}" required readonly type="number" class="form-control"
+                          value="{{ zone.from }}" class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                        <span
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">Mile</span>
+                      </div>
+                      <!-- <p class="mt-2 text-xs text-main-danger" *ngIf="
+                zoneForm.from.errors?.required &&
+                singleZoneFormSubmitted
+              ">
+              From is required
+                </p> -->
+                    </div>
+                    <div class="form-group sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" show-errors>
+                      <label for="validationCustomUsername"
+                        class="block text-sm font-medium text-main-secondary">To</label>
+                      <div class="mt-1 flex gap-px">
+                        <input name="zoneTo{{ index + 1 }}" required type="number" readonly class="form-control"
+                          value="{{ zone.to }}" class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                        <button (click)="removeZone(index)"
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-danger bg-main-danger px-3 text-white sm:text-xs">Remove
+                        </button>
+                      </div>
+                      <!-- <p class="mt-2 text-xs text-main-danger" *ngIf="
+                zoneForm.to.errors?.required &&
+                singleZoneFormSubmitted">
+                To is required
+                </p> -->
+                    </div>
+                  </form>
+                </div>
+  
+                <!-- Add Zones -->
+                <div class="sm:col-span-6 inputFareCover">
+                  <form [formGroup]="zoneFareForm" novalidate class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2 form-group" show-errors>
+                      <label class="block text-sm font-medium text-main-secondary" for="validationCustomUsername">Add
+                        Zone</label>
+                      <div class="mt-1 flex gap-px">
+                        <span
+                          class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                        <input name="addzoneFare" required type="number" class="form-control" formControlName="fare" />
+                      </div>
+                      <p class="mt-2 text-xs text-main-danger " *ngIf="
+                         zoneForm.fare.errors?.required &&
+                         singleZoneFormSubmitted
+                ">
+                        Zone For is required
+                      </p>
+                    </div>
+                    <div class="form-group sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" show-errors>
+                      <label for="validationCustomUsername"
+                        class="block text-sm font-medium text-main-secondary">From</label>
+                      <div class="mt-1 flex gap-px">
+                        <input name="zoneFrom index + 1 " required type="number" class="form-control"
+                          formControlName="from" class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                        <span
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">Mile</span>
+                      </div>
+                      <p class="mt-2 text-xs text-main-danger" *ngIf="
+                         zoneForm.from.errors?.required &&
+                         singleZoneFormSubmitted
+                ">
+                        From is required
+                      </p>
+                    </div>
+                    <div class="form-group sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2" show-errors>
+                      <label for="validationCustomUsername"
+                        class="block text-sm font-medium text-main-secondary">To</label>
+                      <div class="mt-1 flex gap-px">
+                        <input name="zoneToindex + 1 " required type="number" class="form-control" formControlName="to"
+                          class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                        <button (click)="addZone()"
+                          class="inline-flex items-center rounded-r-md border border-l-0 border-main-primary bg-main-primary px-3 text-white sm:text-xs">Add
+                          Zone</button>
+                      </div>
+                         <p class="mt-2 text-xs text-main-danger" *ngIf="
+                             zoneForm.to.errors?.required &&
+                             singleZoneFormSubmitted">
+                        To is required
+                      </p>
+                    </div>
+                  </form>
+                </div>
+  
+                <div class="sm:col-span-3 form-group inputFareCover">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Per
+                    Mile</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <span
+                      class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                    <input name="perMile" required type="number" class="form-control" formControlName="perMile"
+                      class="block w-full min-w-0 flex-1 rounded-none rounded-r-md" />
+                  </div>
+                  <p class="mt-2 text-xs text-main-danger " *ngIf="form.perMile.errors?.required && submitted">
+                    Per mile is required
+                  </p>
+                </div>
+                <div class="sm:col-span-3 form-group inputFareCover">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Per
+                    Minute</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <span
+                      class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                    <input name="perMin" required type="number" class="form-control" formControlName="perMin"
+                      class="block w-full min-w-0 flex-1 rounded-none rounded-r-md" />
+                  </div>
+                  <p class="mt-2 text-xs text-main-danger" *ngIf="form.perMin.errors?.required && submitted">
+                    Per min is required
+                  </p>
+                </div>
+  
+  
+                <div formGroupName="waitTime"
+                  class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2 inputFareCover">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Wait
+                    Time</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <span
+                      class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                    <input name="waitTimeFare" required type="number" class="form-control" formControlName="fare"
+                      class="block w-full min-w-0 flex-1 rounded-none rounded-r-md" />
+                  </div>
+                  <p *ngIf="waitTimeForm.fare.errors?.required && submitted"
+                   class="mt-2 text-xs text-main-danger">
+                    Wait Time is required
+                  </p>
+                </div>
+                <div formGroupName="waitTime"
+                  class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2 inputFareCover">
+                  <label for="validationCustomUsername"
+                    class="block text-sm font-medium text-main-secondary">Every</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <input name="waitTimePer" required type="number" class="form-control" formControlName="per"
+                      class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                    <span
+                      class="inline-flex items-center rounded-r-md border border-l-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">Minutes</span>
+                  </div>
+                  <p class="mt-2 text-xs text-main-danger" *ngIf="
+                    waitTimeForm.per.errors?.required && submitted
+            ">
+                    Minutes is required
+                  </p>
+                </div>
+                <div formGroupName="waitTime"
+                  class="sm:col-span-3 md:col-span-2 lg:col-span-3 xl:col-span-2 inputFareCover">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">
+                    Free Quota
+                  </label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <input name="waitTimeAfter" required type="number" class="form-control" formControlName="after"
+                      class="block w-full min-w-0 flex-1 rounded-none rounded-l-md" />
+                    <span
+                      class="inline-flex items-center rounded-r-md border border-l-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">Minutes</span>
+                  </div>
+                  <p class="mt-2 text-xs text-main-danger" *ngIf="
+                  waitTimeForm.after.errors?.required && submitted
+            ">
+                    Minutes is required
+                  </p>
+                </div>
+  
+                <div class="sm:col-span-3">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Cancel
+                    Charges</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <span
+                      class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                    <input name="cancelCharges" required type="number" class="form-control"
+                      formControlName="cancelCharges" class="block w-full min-w-0 flex-1 rounded-none rounded-r-md" />
+                  </div>
+                  <p class="mt-2 text-xs text-main-danger" *ngIf="form.cancelCharges.errors?.required && submitted">
+                    Cancel charges is required
+                  </p>
+                </div>
+  
+                <div class="sm:col-span-3">
+                  <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">No Show Charges</label>
+                  <div class="mt-1 flex gap-px input-group" show-errors>
+                    <span
+                      class="inline-flex items-center rounded-l-md border border-r-0 border-main-base bg-main-base-50 px-3 text-main-light sm:text-xs">$</span>
+                    <input name="noShowCharges" required type="number" class="form-control"
+                      formControlName="noShowCharges" class="block w-full min-w-0 flex-1 rounded-none rounded-r-md" />
+                  </div>
+                  <div *ngIf="form.noShowCharges.errors && submitted ">
+                    <div *ngIf="form.noShowCharges.errors.required " class="">
+                      <p class="mt-2 text-xs text-main-danger ">
+                        No Show Charges is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="code" class="block text-sm font-medium text-main-secondary">Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="code" name="code" id="code" />
+                  </div>
+                  <div *ngIf="form.code.errors && submitted">
+                    <div *ngIf="form.code.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="perMileCode" class="block text-sm font-medium text-main-secondary">Per Mile Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="perMileCode" name="perMileCode" id="perMileCode" />
+                  </div>
+                  <div *ngIf="form.perMileCode.errors && submitted">
+                    <div *ngIf="form.perMileCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Per Mile Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="dryRunCode" class="block text-sm font-medium text-main-secondary">Dry Run Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="dryRunCode" name="dryRunCode" id="dryRunCode" />
+                  </div>
+                  <div *ngIf="form.dryRunCode.errors && submitted">
+                    <div *ngIf="form.dryRunCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Dry Run Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="baseFareCode" class="block text-sm font-medium text-main-secondary">Base Fare Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="baseFareCode" name="baseFareCode" id="baseFareCode" />
+                  </div>
+                  <div *ngIf="form.baseFareCode.errors && submitted">
+                    <div *ngIf="form.baseFareCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Base Fare Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="waitTimeCode" class="block text-sm font-medium text-main-secondary">Wait Time Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="waitTimeCode" name="waitTimeCode" id="waitTimeCode" />
+                  </div>
+                  <div *ngIf="form.waitTimeCode.errors && submitted">
+                    <div *ngIf="form.waitTimeCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Wait Time Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="weekendNightCode" class="block text-sm font-medium text-main-secondary">Weekend Night
+                    Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="weekendNightCode" name="weekendNightCode" id="weekendNightCode" />
+                  </div>
+                  <div *ngIf="form.weekendNightCode.errors && submitted">
+                    <div *ngIf="form.weekendNightCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Weekend Night Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label for="responseNightCode" class="block text-sm font-medium text-main-secondary">Response Night
+                    Code</label>
+                  <div class="mt-1">
+                    <input type="text" formControlName="responseNightCode" name="responseNightCode"
+                      id="responseNightCode" />
+                  </div>
+                  <div *ngIf="form.responseNightCode.errors && submitted">
+                    <div *ngIf="form.responseNightCode.errors.required" class="">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Response Night Code is Required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="sm:col-span-3">
+                  <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                  <div class="mt-1">
+                    <select id="status" formControlName="status">
+                      <option value="">-- Select Status --</option>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div *ngIf="form.status.errors && submitted">
+                    <div *ngIf="form.status.errors.required" class="error">
+                      <p class="mt-2 text-xs text-main-danger">
+                        Status is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="sm:col-span-3"></div>
+              </div>
+  
+              <div class="pt-8">
+                <div class="flex justify-end">
+                  <button type="submit" class="ml-3 btn-primary">
+                    <!-- {{fareId ? 'Update':'Create'}} -->
+                     Create
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

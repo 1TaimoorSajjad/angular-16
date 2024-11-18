@@ -1,0 +1,606 @@
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex flex-col gap-4 min-h-full">
+    <form [formGroup]="memberForm" (ngSubmit)="saveMember()">
+      <div class="flex lg:flex-row flex-1 gap-4">
+        <!-- General Information Member card -->
+        <div class="card flex-1 divide-y divide-main-base flex flex-col gap-4">
+          <div>
+            <div>
+                <!-- {{memberId? 'Edit' : 'Add'}} -->
+              <h3 class="text-lg font-medium leading-6 text-main-dark">
+               Add
+              </h3>
+              <p class="mt-1 text-sm text-main-light">
+                Use member permanent address where he/she can receive mail.
+              </p>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+              <div class="sm:col-span-2">
+                <label for="firstName" class="block text-sm font-medium text-main-secondary">First Name</label>
+                <div class="mt-1">
+                  <input formControlName="firstName" type="text" name="firstName" id="firstName" />
+                </div>
+                <div *ngIf="form.firstName.errors && submitted">
+                  <div *ngIf="form.firstName.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      First Name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="middleName" class="block text-sm font-medium text-main-secondary">Middle Name</label>
+                <div class="mt-1">
+                  <input formControlName="middleName" type="text" name="middleName" id="middleName" />
+                </div>
+                <div *ngIf="form.middleName.errors && submitted">
+                  <div *ngIf="form.middleName.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Middle Name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="LastName" class="block text-sm font-medium text-main-secondary">Last Name</label>
+                <div class="mt-1">
+                  <input formControlName="lastName" type="text" name="LastName" id="LastName" />
+                </div>
+                <div *ngIf="form.lastName.errors && submitted">
+                  <div *ngIf="form.lastName.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Last Name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="gender" class="block text-sm font-medium text-main-secondary">Gender</label>
+                <div class="mt-1">
+                  <select id="gender" formControlName="gender">
+                    <option value="">-- Select Gender --</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div *ngIf="form.gender.errors && submitted">
+                  <div *ngIf="form.gender.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Gender is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="clientIdMedicalRecordNumber" class="block text-sm font-medium text-main-secondary">Member
+                  Code/Medical Record Number</label>
+                <div class="mt-1">
+                  <input formControlName="clientId" type="text" name="clientIdMedicalRecordNumber"
+                    id="clientIdMedicalRecordNumber" />
+                </div>
+                <div *ngIf="form.clientId.errors && submitted">
+                  <div *ngIf="form.clientId.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Medical Id is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="dateofBirth" class="block text-sm font-medium text-main-secondary">Date of Birth</label>
+                <div class="mt-1">
+                  <input type="text" id="preDob" formControlName="preDob" [owlDateTime]="dob" [readonly]="true"
+                  (ngModelChange)="onDateChange($event, form.dob)" [owlDateTimeTrigger]="dob"
+                  name="dob" />
+                </div>
+                <div *ngIf="form.dob.errors && submitted">
+                  <div *ngIf="form.dob.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Date of birth is required
+                    </p>
+                  </div>
+                </div>
+                <owl-date-time #dob [pickerType]="'calendar'"></owl-date-time>
+  
+              </div>
+              <div class="sm:col-span-2">
+                <label for="mobileNumber" class="block text-sm font-medium text-main-secondary">Contact Number</label>
+                <div class="mt-1">
+                  <input formControlName="contactNumber" type="tel" name="mobileNumber" id="mobileNumber" />
+                </div>
+                <div *ngIf="form.contactNumber.errors && submitted">
+                  <div *ngIf="form.contactNumber.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Contact Number is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="cellPhone" class="block text-sm font-medium text-main-secondary">Phone Number</label>
+                <div class="mt-1">
+                  <input formControlName="cellPhone" type="tel" name="cellPhone" id="cellPhone" />
+                </div>
+                <div *ngIf="form.cellPhone.errors && submitted">
+                  <div *ngIf="form.cellPhone.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Phone Number is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="email" class="block text-sm font-medium text-main-secondary">Email</label>
+                <div class="mt-1">
+                  <input formControlName="email" type="text" name="clientEmail" id="email" />
+                </div>
+                <div *ngIf="form.email.errors && submitted">
+                  <div *ngIf="form.email.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Email is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div formGroupName="homeAddress" class="sm:col-span-2">
+                <label for="addressName" class="block text-sm font-medium text-main-secondary">Address Name</label>
+                <div class="mt-1">
+                  <input formControlName="name" type="text" name="addressName" id="addressName" />
+                </div>
+                <div *ngIf="addressForm.name.errors && submitted">
+                  <div *ngIf="addressForm.name.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Address Name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div formGroupName="homeAddress" class="sm:col-span-2">
+                <label for="Address" class="block text-sm font-medium text-main-secondary">Address
+                </label>
+                <div class="mt-1">
+                  <input google-place formControlName="address" (onSelect)="setAddress($event)" type="text" name="Address"
+                    id="Address" />
+                </div>
+                <div *ngIf="addressForm.address.errors && submitted">
+                  <div *ngIf="addressForm.address.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Address is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div formGroupName="homeAddress" class="sm:col-span-2">
+                <label for="apt-ste-rm" class="block text-sm font-medium text-main-secondary">Apt/Suite/Room
+                </label>
+                <div class="mt-1">
+                  <input formControlName="aptOrSuite" type="text" name="apt-ste-rm" id="apt-ste-rm" />
+                </div>
+                <div *ngIf="addressForm.aptOrSuite.errors && submitted">
+                  <div *ngIf="addressForm.aptOrSuite.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      APT or Suite is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div formGroupName="homeAddress" class="sm:col-span-2">
+                <label for="cityState" class="block text-sm font-medium text-main-secondary">City/State
+                </label>
+                <div class="mt-1">
+                  <input formControlName="state" type="text" name="cityState" id="cityState" />
+                </div>
+                <!-- <div *ngIf="addressForm.state.errors && submitted">
+                  <div *ngIf="addressForm.state.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      State is required
+                    </p>
+                  </div>
+                </div> -->
+              </div>
+              <div formGroupName="homeAddress" class="sm:col-span-2">
+                <label for="zipCode" class="block text-sm font-medium text-main-secondary">Zip Code
+                </label>
+                <div class="mt-1">
+                  <input formControlName="zipCode" type="text" name="zipCode" id="zipCode" />
+                </div>
+                <div *ngIf="addressForm.zipCode.errors && submitted">
+                  <div *ngIf="addressForm.zipCode.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Zip Code is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="Fundingsource" class="block text-sm font-medium text-main-secondary">Funding Source</label>
+                <div class="mt-1">
+                  <ng-select formControlName="fundingSource" id="fundingSource" [clearable]="false"
+                    class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                    <ng-option value="">-- Select Funding Source --</ng-option>
+                    <ng-option value="mtm">MTM</ng-option>
+                    <ng-option value="modivcare">Modivcare</ng-option>
+                    <!-- <ng-option *ngFor="let corporate of corporateUsers | sortBy:'asc':'displayName'"
+                      value="{{ corporate._id }}">{{corporate.displayName | capitalize}}</ng-option> -->
+                  </ng-select>
+                </div>
+                <div *ngIf="form.fundingSource.errors && submitted">
+                  <div *ngIf="form.fundingSource.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Funding Source is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="customerType" class="block text-sm font-medium text-main-secondary">Member Type</label>
+                <div class="mt-1">
+                  <select (change)="onChangeType($event)" formControlName="type" id="customerType">
+                    <option value="vip">VIP</option>
+                    <option value="regular">Regular</option>
+                    <option value="standingorder">Standing Order</option>
+                  </select>
+                </div>
+                <div *ngIf="form.type.errors && submitted">
+                  <div *ngIf="form.type.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Member Type is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="form.type.value === 'vip'" class="sm:col-span-2">
+                <label for="vipExpiryDate" class="block text-sm font-medium text-main-secondary">VIP Expiry Date</label>
+                <div class="mt-1">
+                  <input type="text" id="vipExpiryDate" formControlName="preVipExpiryDate" [owlDateTime]="vipExpiryDate" [readonly]="true"
+                    (ngModelChange)="onDateChange($event, form.vipExpiryDate)" [owlDateTimeTrigger]="vipExpiryDate"
+                    name="vipExpiryDate" />
+                </div>
+                <div *ngIf="form.vipExpiryDate.errors && submitted">
+                  <div *ngIf="form.vipExpiryDate.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      VIP Expiry Date is required
+                    </p>
+                  </div>
+                </div>
+                <owl-date-time #vipExpiryDate [pickerType]="'calendar'"></owl-date-time>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="los" class="block text-sm font-medium text-main-secondary">Level of Service</label>
+                <div class="mt-1">
+                  <ng-select id="los" formControlName="los" [clearable]="false" (change)="onSelectLOS($event)"
+                    class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                    <ng-option value="">-- Select Level of Service --</ng-option>
+                    <ng-option value="">WAV</ng-option>
+                    <ng-option value="">AMB</ng-option>
+                    <!-- <ng-option *ngFor="let los of levelOfServices" value="{{ los._id }}">{{los.title | capitalize}}</ng-option> -->
+                  </ng-select>
+                </div>
+                <div *ngIf="form.los.errors && submitted">
+                  <div *ngIf="form.los.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Level of Service is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="spaceType" class="block text-sm font-medium text-main-secondary">Space Type</label>
+                <div class="mt-1">
+                  <ng-select id="spaceType" formControlName="spaceType" [clearable]="false"
+                    class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                    <ng-option value="">-- Select Space Type --</ng-option>
+                    <ng-option value="">ADD</ng-option>
+                    <ng-option value="">ACC</ng-option>
+                    <!-- <ng-option *ngFor="let spaceType of spaceTypes" value="{{ spaceType._id }}">{{spaceType.title | capitalize}}
+                      ({{spaceType.description}})
+                    </ng-option> -->
+                  </ng-select>
+                </div>
+                <div *ngIf="form.spaceType.errors && submitted">
+                  <div *ngIf="form.spaceType.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Space Type is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="weight" class="block text-sm font-medium text-main-secondary">Weight
+                </label>
+                <div class="mt-1">
+                  <input formControlName="weight" type="text" name="weight" id="weight" />
+                </div>
+                <div *ngIf="form.weight.errors && submitted">
+                  <div *ngIf="form.weight.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Weight is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="stairsSteps" class="block text-sm font-medium text-main-secondary">Stairs step/s
+                </label>
+                <div class="mt-1">
+                  <input formControlName="stairsStep" type="text" name="stairsSteps" id="stairsSteps" />
+                </div>
+                <div *ngIf="form.stairsStep.errors && submitted">
+                  <div *ngIf="form.stairsStep.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Stairs step/s is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="CovidStatus" class="block text-sm font-medium text-main-secondary">Covid Status</label>
+                <div class="mt-1">
+                  <select id="CovidStatus" formControlName="covidStatus">
+                    <option value="">-- Select Covid status --</option>
+                    <option value="positive">Positive</option>
+                    <option value="negative">Negative</option>
+                  </select>
+                </div>
+                <div *ngIf="form.covidStatus.errors && submitted">
+                  <div *ngIf="form.covidStatus.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Covid Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+  
+              <div class="sm:col-span-2">
+                <label for="clientType" class="block text-sm font-medium text-main-secondary">Member Role</label>
+                <div class="mt-1">
+                  <select (change)="onChangeClientType($event)" id="clientType" formControlName="clientType">
+                    <option value="">-- Select Member Role --</option>
+                    <option value="patient">Patient</option>
+                    <option value="passenger">Passenger</option>
+                  </select>
+                </div>
+                <div *ngIf="form.clientType.errors && submitted">
+                  <div *ngIf="form.clientType.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Member Role is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="form.clientType.value === 'passenger'" class="sm:col-span-2">
+                <label for="password" class="block text-sm font-medium text-main-secondary">Password</label>
+                <div class="mt-1">
+                  <input type="password" formControlName="password" name="password" id="password" />
+                </div>
+                <div *ngIf="form.password.errors && submitted">
+                  <div *ngIf="form.password.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger ">
+                      Password is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="sm:col-span-2">
+                <label for="smsConsent" class="block text-sm font-medium text-main-secondary">SMS Required</label>
+                <div class="mt-1">
+                  <select id="smsConsent" formControlName="smsConsent">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+                <div class="mt-1">
+                  <select (change)="onChangeAccountStatus($event)" formControlName="accountStatus" id="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div *ngIf="form.accountStatus.errors && submitted">
+                  <div *ngIf="form.accountStatus.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Status is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="form.accountStatus.value ==='inactive'" formGroupName="statusDetails" class="sm:col-span-2">
+                <label for="statusReason" class="block text-sm font-medium text-main-secondary">In Active Reason
+                </label>
+                <div class="mt-1">
+                  <select (change)="onChangeReason($event)" id="statusReason" formControlName="reason">
+                    <option value="">-- Select Reason --</option>
+                    <option value="dryrun">Dry Run</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="hospitalized">Hospitalized</option>
+                    <option value="expired">Expired</option>
+                    <option value="duplicate">Duplicate</option>
+                  </select>
+                </div>
+                <div *ngIf="statusForm.reason.errors && submitted">
+                  <div *ngIf="statusForm.reason.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      In Active Reason is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="form.accountStatus.value === 'inactive' && statusForm.reason.value === 'expired'"
+                formGroupName="statusDetails" class="sm:col-span-2">
+                <label for="expiryDate" class="block text-sm font-medium text-main-secondary">Expiry Date</label>
+                <div class="mt-1">
+                  <input type="text" id="expiryDate" formControlName="preExpiryDate" [owlDateTime]="expiryDate" [readonly]="true"
+                    (ngModelChange)="onDateChange($event,statusForm.expiryDate)" [owlDateTimeTrigger]="expiryDate"
+                    name="expiryDate" />
+                </div>
+                <div *ngIf="statusForm.expiryDate.errors && submitted">
+                  <div *ngIf="statusForm.expiryDate.errors.required" class="error">
+                    <p class="mt-2 text-xs text-main-danger">
+                      Expiry Date is required
+                    </p>
+                  </div>
+                </div>
+                <owl-date-time #expiryDate [pickerType]="'calendar'"></owl-date-time>
+              </div>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="Private Note" class="block text-sm font-medium text-main-secondary">Private Note
+                </label>
+                <div class="mt-1">
+                  <textarea formControlName="privateNote" name="Private Note" id="Private Note" value=""></textarea>
+                </div>
+                <p class="mt-2 text-xs text-main-danger hidden">
+                  Please enter the Private Note
+                </p>
+              </div>
+              <div class="sm:col-span-3">
+                <label for="comment" class="block text-sm font-medium text-main-secondary">
+                  Note
+                </label>
+                <div class="mt-1">
+                  <textarea formControlName="note" name="Note" id="Note" value=""></textarea>
+                </div>
+                <p class="mt-2 text-xs text-main-danger hidden">
+                  Please enter the Note
+                </p>
+              </div>
+            </div>
+            <div class=" mt-6">
+              <label for="address" class="block text-sm font-medium text-main-secondary"></label>
+              <div class="relative overflow-hidden rounded-full inline-flex mt-1">
+                <img *ngIf="form.profileImageURL.value" [src]="form.profileImageURL.value" alt="member-image"
+                  class="relative h-32 w-32 rounded-full border border-main-base" />
+                <img class="relative h-32 w-32 rounded-full border border-main-base" *ngIf="!form.profileImageURL.value"
+                  [src]="'assets/images/placeholders/member-placeholder.png'" />
+  
+                <label for="desktop-user-photo"
+                  class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100">
+                  <span>Change</span>
+                  <span class="sr-only"> user photo</span>
+                  <input #fileInput type="file"(change)="fileProcessing(fileInput,form.profileImageURL)" name="user-photo"
+                    class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-main-base opacity-0"
+                    accept="image/*" />
+                </label>
+              </div>
+              <div *ngIf="form.profileImageURL.errors && submitted">
+                <div *ngIf="form.profileImageURL.errors.required" class="error">
+                  <p class="mt-2 text-xs text-main-danger">
+                    Image is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- *ngIf="memberId" -->
+            <div *ngIf="false" class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-6">
+              <!-- ---- Funding services --- -->
+              <div class="sm:col-span-3 border-2 border-dashed border-main-base rounded-lg overflow-hidden">
+                <h2 class="text-sm font-semibold leading-6 text-gray-900 p-2">Comments</h2>
+                <div class="lg:col-start-3 h-96 overflow-y-auto space-y-4 p-2">
+                  <!-- Activity feed -->
+                 
+  
+                  <div class="space-y-6"*ngFor="let comment of form.history.value;  index as index" >
+                    <div class="relative flex gap-x-4">
+                      
+                      <div [ngClass]="(form.history.value.length - 1) === index ? 'hidden' : 'flex'"
+                      class="absolute left-0 top-0  w-6 justify-center mt-3 -bottom-7">
+                        <div class="w-px bg-gray-200"></div>
+                      </div>
+                      <img src="assets/images/placeholders/profile_placeholder.png" alt="" class="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50">
+                      <div class="flex-auto rounded-md border border-main-base overflow-hidden" [ngClass]="comment.relation? 'bg-main-base-100' : '' ">
+  
+                    <div class="px-3 py-2">
+                      <div class="flex justify-between gap-x-4">
+                        <!-- {{comment.createdBy}} -->
+                        <div class="py-0.5 text-xs leading-5 text-gray-500"><span class="font-medium text-gray-900">Created By</span>
+                          <!-- #{{trimId(comment._id)}} -->
+                          <span class="text-xs text-main-primary font-bold px-2">Comment ID: 112121</span></div>
+                         <div class="flex justify-end">
+                          <!-- {{comment.createdAt | date:"MM/DD/YYYY HH:mm"}} -->
+                      <span datetime="2023-01-23T15:56" class="flex-none py-0.5 text-xs leading-5 text-gray-500">Comment Date</span>
+  
+                         </div>
+                      </div>
+                      <p class="text-sm leading-6 text-gray-500">{{comment.text}}</p>
+                    </div>
+                       <div class="flex justify-between border-t border-main-base px-3 py-1">
+                        <div>
+                          <button type="button" (click)="onCommentEdit(comment)"
+                          class="text-xs btn-white border-0 text-main-primary shadow-none bg-transparent py-1 px-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                              d="M12 20.75a7.26 7.26 0 0 1-7.25-7.25a.75.75 0 0 1 1.5 0A5.75 5.75 0 1 0 12 7.75H9.5a.75.75 0 0 1 0-1.5H12a7.25 7.25 0 0 1 0 14.5" />
+                            <path fill="currentColor"
+                              d="M12 10.75a.74.74 0 0 1-.53-.22l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 1 1 1.06 1.06L10.06 7l2.47 2.47a.75.75 0 0 1 0 1.06a.74.74 0 0 1-.53.22" />
+                          </svg>
+                          <span class="ml-1">Reply</span>
+                        </button>
+                        </div>
+                        <div>
+                          <!-- *ngIf="comment.relation" -->
+                          <div>
+                            <!-- {trimId(comment.relation)}} -->
+                            <span class="inline-flex items-center rounded-full bg-main-primary-100/50 px-2 py-1 text-xs font-medium text-main-primary">Comment Relation</span>
+                          </div>
+                        </div>
+                       </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- New comment form -->
+               
+                </div>
+                <div class="flex gap-x-3 p-2" >
+                  <img src="assets/images/placeholders/profile_placeholder.png" alt="" class="h-6 w-6 flex-none rounded-full bg-gray-50">
+                  <div class="relative flex-auto" [formGroup]="commentForm">
+                    <div class="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600" [ngClass]="commentForm.value.relation ? 'ring-2 ring-main-primary' : ''" >
+                      <label for="text" class="sr-only">Add your comment</label>
+                      <textarea formControlName="text" rows="2" name="text" id="text"  class="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Add your comment..."></textarea>
+                      <div *ngIf="historyForm.text.errors && cmtSubmitted">
+                        <div *ngIf="historyForm.text?.errors?.required" class="error">
+                          <p class="mt-2 text-xs text-main-danger">
+                            Comment is required
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="absolute inset-x-0 bottom-0 flex items-center justify-between py-2 px-3">
+                      <div>
+                        <!-- *ngIf="commentForm.value.relation" -->
+                       <div>
+                        <!-- #{{trimId(commentForm.value.relation)}} -->
+                        <span  class="inline-flex items-center rounded-full bg-main-primary-100/50 px-2 py-1 text-xs font-medium text-main-primary">Comment Relation</span>
+                       </div>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <button *ngIf="commentForm.value.relation" class="btn-white" type="button" (click)="cancelReply()">
+                          Cancel
+                        </button>
+                        <button type="button" (click)="addComment()" class="btn-primary">Comment</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="pt-4">
+            <div class="flex justify-end">
+              <!-- {{memberId? 'Update ' : 'Create'}} -->
+              <button type="submit" class="ml-3 btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

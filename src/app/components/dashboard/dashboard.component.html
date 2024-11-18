@@ -1,0 +1,561 @@
+<div class="relative z-0 lg:flex lg:flex-col flex-1 lg:overflow-hidden h-full">
+  <div class="inline-flex w-full items-center">
+    <div class="snap-x py-2 px-4 flex gap-2 overflow-x-auto w-full min-w-0 scroll-pl-4">
+      <div *ngFor="let notification of notifications"
+        class="snap-start flex-shrink-0 w-72 bg-container-base shadow rounded group relative flex items-center p-2 overflow-hidden">
+        <a class="-m-1 block flex-1 p-1">
+          <div class="absolute inset-0 group-hover:bg-main-base-50" aria-hidden="true"></div>
+          <div class="relative flex min-w-0 flex-1 items-start gap-2 text-xs text-main-secondary">
+            <div *ngIf="notification?.user?.profileImageURL"
+              class="h-8 w-8 rounded-full overflow-hidden object-cover flex-shrink-0">
+              <img src="{{notification?.user?.profileImageURL}}"
+                class="h-full w-full" />
+            </div>
+            <div class="h-8 w-8 rounded-full overflow-hidden object-cover flex-shrink-0"
+              *ngIf="!notification?.user?.profileImageURL">
+              <img class="h-full w-full" src="/assets/images/placeholders/driver-placeholder.png" alt="" />
+            </div>
+            <div class="flex flex-col w-full">
+              <div class="flex justify-between items-center">
+                <div>
+                  <div *ngIf="notification.user && notification.user.displayName" class="font-bold">{{notification?.user?.displayName | capitalize}}</div>
+                </div>
+                <div class="font-bold text-main-primary">
+                  {{(notification.status === "arrived" ? "On Scene" : notification.status === "started" ? "Member Onboard"
+                  : notification.status) | titlecase}}
+                </div>
+              </div>
+              <div>
+                <p class="text-main-light line-clamp-2">
+                  {{notification.text}}
+                </p>
+                <p class="text-main-light">
+                  {{ notification.created | date:'MM/DD/YYYY' }} {{ notification.created | date:'HHmm' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+    <div class="p-2 h-full">
+      <button [routerLink]="['/notifications']" routerLinkActive="router-link-active" class="h-full btn-primary">See
+        All</button>
+    </div>
+  </div>
+  <div class="lg:flex-1 lg:flex h-full min-h-0">
+    <!-- Stats & Drivers -->
+    <div class="lg:w-80 flex-shrink-0 border-r border-main-base xl:order-first flex flex-col">
+      <div class="grid grid-col-2 md:grid-cols-4 lg:grid-cols-2 gap-2 p-2">
+        <div class="rounded-2xl bg-dashboard-stats-success-light p-3">
+          <dl class="flex items-center">
+            <dt class="py-3 px-1 rounded-lg bg-dashboard-stats-success-dark">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dashboard-stats-success" viewBox="0 0 48 48">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M15 9.5c0-.438 4.516-3.5 9-3.5s9 3.063 9 3.5c0 1.56-.166 2.484-.306 2.987c-.093.33-.402.513-.745.513H16.051c-.343 0-.652-.183-.745-.513C15.166 11.984 15 11.06 15 9.5Zm7.5-.5a1 1 0 1 0 0 2h3a1 1 0 0 0 0-2h-3Zm-6.462 10.218c-3.33-1.03-2.49-2.87-1.22-4.218H33.46c1.016 1.298 1.561 3.049-1.51 4.097a8 8 0 1 1-15.912.12Zm7.69.782c2.642 0 4.69-.14 6.26-.384a6 6 0 1 1-11.98.069c1.463.202 3.338.315 5.72.315Zm8.689 14.6A9.992 9.992 0 0 0 24 30a9.992 9.992 0 0 0-8.42 4.602a2.49 2.49 0 0 0-1.447-1.05l-1.932-.517a2.5 2.5 0 0 0-3.062 1.767L8.363 37.7a2.5 2.5 0 0 0 1.768 3.062l1.931.518A2.492 2.492 0 0 0 14 41.006A1 1 0 0 0 16 41v-1c0-.381.027-.756.078-1.123l5.204 1.395a3 3 0 0 0 5.436 0l5.204-1.395c.051.367.078.742.078 1.123v1a1 1 0 0 0 2 .01c.56.336 1.252.453 1.933.27l1.932-.517a2.5 2.5 0 0 0 1.768-3.062l-.777-2.898a2.5 2.5 0 0 0-3.062-1.767l-1.932.517a2.49 2.49 0 0 0-1.445 1.046Zm-15.814 2.347A8.008 8.008 0 0 1 23 32.062v4.109a3.007 3.007 0 0 0-1.88 1.987l-4.517-1.21Zm14.794 0A8.009 8.009 0 0 0 25 32.062v4.109c.904.32 1.61 1.06 1.88 1.987l4.517-1.21ZM24 40a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </dt>
+            <dd class="flex flex-col item-center ml-2 truncate">
+              <div class="text-xs text-dashboard-stats-info flex-1 truncate">
+                Available
+              </div>
+              <div class="text-lg font-bold text-dashboard-stats-success flex-1 truncate">
+                {{onlineDrivers}}
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div class="rounded-2xl bg-dashboard-stats-danger-light p-3">
+          <dl class="flex items-center">
+            <dt class="py-3 px-1 rounded-lg bg-dashboard-stats-danger-dark">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dashboard-stats-danger" viewBox="0 0 48 48">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M15 9.5c0-.438 4.516-3.5 9-3.5s9 3.063 9 3.5c0 1.56-.166 2.484-.306 2.987c-.093.33-.402.513-.745.513H16.051c-.343 0-.652-.183-.745-.513C15.166 11.984 15 11.06 15 9.5Zm7.5-.5a1 1 0 1 0 0 2h3a1 1 0 0 0 0-2h-3Zm-6.462 10.218c-3.33-1.03-2.49-2.87-1.22-4.218H33.46c1.016 1.298 1.561 3.049-1.51 4.097a8 8 0 1 1-15.912.12Zm7.69.782c2.642 0 4.69-.14 6.26-.384a6 6 0 1 1-11.98.069c1.463.202 3.338.315 5.72.315Zm8.689 14.6A9.992 9.992 0 0 0 24 30a9.992 9.992 0 0 0-8.42 4.602a2.49 2.49 0 0 0-1.447-1.05l-1.932-.517a2.5 2.5 0 0 0-3.062 1.767L8.363 37.7a2.5 2.5 0 0 0 1.768 3.062l1.931.518A2.492 2.492 0 0 0 14 41.006A1 1 0 0 0 16 41v-1c0-.381.027-.756.078-1.123l5.204 1.395a3 3 0 0 0 5.436 0l5.204-1.395c.051.367.078.742.078 1.123v1a1 1 0 0 0 2 .01c.56.336 1.252.453 1.933.27l1.932-.517a2.5 2.5 0 0 0 1.768-3.062l-.777-2.898a2.5 2.5 0 0 0-3.062-1.767l-1.932.517a2.49 2.49 0 0 0-1.445 1.046Zm-15.814 2.347A8.008 8.008 0 0 1 23 32.062v4.109a3.007 3.007 0 0 0-1.88 1.987l-4.517-1.21Zm14.794 0A8.009 8.009 0 0 0 25 32.062v4.109c.904.32 1.61 1.06 1.88 1.987l4.517-1.21ZM24 40a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </dt>
+            <dd class="flex flex-col item-center ml-2 truncate">
+              <div class="text-xs text-dashboard-stats-info flex-1 truncate">
+                Busy
+              </div>
+              <div class="text-lg font-bold text-dashboard-stats-danger flex-1 truncate">
+                {{busyDrivers}}
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div class="rounded-2xl bg-dashboard-stats-secondary-light p-3">
+          <dl class="flex items-center">
+            <dt class="py-3 px-1 rounded-lg bg-dashboard-stats-secondary-dark">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dashboard-stats-info" viewBox="0 0 48 48">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M15 9.5c0-.438 4.516-3.5 9-3.5s9 3.063 9 3.5c0 1.56-.166 2.484-.306 2.987c-.093.33-.402.513-.745.513H16.051c-.343 0-.652-.183-.745-.513C15.166 11.984 15 11.06 15 9.5Zm7.5-.5a1 1 0 1 0 0 2h3a1 1 0 0 0 0-2h-3Zm-6.462 10.218c-3.33-1.03-2.49-2.87-1.22-4.218H33.46c1.016 1.298 1.561 3.049-1.51 4.097a8 8 0 1 1-15.912.12Zm7.69.782c2.642 0 4.69-.14 6.26-.384a6 6 0 1 1-11.98.069c1.463.202 3.338.315 5.72.315Zm8.689 14.6A9.992 9.992 0 0 0 24 30a9.992 9.992 0 0 0-8.42 4.602a2.49 2.49 0 0 0-1.447-1.05l-1.932-.517a2.5 2.5 0 0 0-3.062 1.767L8.363 37.7a2.5 2.5 0 0 0 1.768 3.062l1.931.518A2.492 2.492 0 0 0 14 41.006A1 1 0 0 0 16 41v-1c0-.381.027-.756.078-1.123l5.204 1.395a3 3 0 0 0 5.436 0l5.204-1.395c.051.367.078.742.078 1.123v1a1 1 0 0 0 2 .01c.56.336 1.252.453 1.933.27l1.932-.517a2.5 2.5 0 0 0 1.768-3.062l-.777-2.898a2.5 2.5 0 0 0-3.062-1.767l-1.932.517a2.49 2.49 0 0 0-1.445 1.046Zm-15.814 2.347A8.008 8.008 0 0 1 23 32.062v4.109a3.007 3.007 0 0 0-1.88 1.987l-4.517-1.21Zm14.794 0A8.009 8.009 0 0 0 25 32.062v4.109c.904.32 1.61 1.06 1.88 1.987l4.517-1.21ZM24 40a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </dt>
+            <dd class="flex flex-col item-center ml-2 truncate">
+              <div class="text-xs text-dashboard-stats-info flex-1 truncate">
+                Offline
+              </div>
+              <div class="text-lg font-bold text-dashboard-stats-info flex-1 truncate">
+                {{offlineDrivers}}
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div (click)="showInprogressTripsSlideout = true"
+          class="rounded-2xl bg-dashboard-stats-primary-light p-3 cursor-pointer">
+          <dl class="flex items-center">
+            <dt class="py-3 px-1 rounded-lg bg-dashboard-stats-primary-dark">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dashboard-stats-primary" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M6.016 4.502A2.975 2.975 0 0 0 3.038 7.48c0 2.233 2.978 5.53 2.978 5.53s2.978-3.297 2.978-5.53a2.975 2.975 0 0 0-2.978-2.978Zm0 4.041A1.063 1.063 0 1 1 7.079 7.48a1.064 1.064 0 0 1-1.063 1.063Zm15.008 2.753v-4.3a4.962 4.962 0 0 0-.204-1.333a4.996 4.996 0 0 0-9.796 1.216v.248l-.01.87v9.952h-.004v.041a2 2 0 0 1-4 0c0-.012.003-.024.004-.037H7.01V16.01h-2v2h.002a3.998 3.998 0 0 0 7.996-.005h.002v-.982h.005V8.997l.01-1.87V6.88a3.001 3.001 0 0 1 6 .123v4.275a1.999 1.999 0 1 0 2 .018Z" />
+              </svg>
+            </dt>
+            <dd class="flex flex-col item-center ml-2 truncate">
+              <div class="text-xs text-dashboard-stats-info flex-1 truncate">
+                In Progress
+              </div>
+              <div class="text-lg font-bold text-dashboard-stats-primary flex-1 truncate">
+                {{tripsInProgress ? tripsInProgress.length : 0}}
+              </div>
+            </dd>
+          </dl>
+        </div>
+       
+      </div>
+      <div class="p-2">
+        <ng-select [items]="serviceAreaList" [(ngModel)]="selectedServiceArea" [clearable]="false" [multiple]="true"
+          [closeOnSelect]="false" bindValue="item" bindLabel="item" placeholder="-- Select Service Area --"
+          class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+          (change)="onChangeServiceArea()" [searchable]="true">
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" />
+            {{ preServiceAreas[item].name | capitalize }}
+          </ng-template>
+          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+            <div class="ng-value" *ngFor="let item of items | slice:0:2;index as index">
+                <!-- <span class="ng-value-label" >{{preServiceAreas[item].name}}</span> -->
+            </div>
+            <div class="ng-value" *ngIf="items.length > 2">
+                <span class="ng-value-label">{{items.length - 2}} more...</span>
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="p-2 max-h-[300px] lg:max-h-full lg:h-full overflow-y-auto">
+        <ul class="flex flex-col space-y-4">
+          <li *ngFor="let driver of filteredDrivers | sortBy:'asc':'displayName'">
+            <div class="relative flex items-center border border-main-base rounded-2xl shadow p-3 "
+              [ngClass]="{ 'ring-x ring-t ring-2 ring-main-primary': driver._id === selectedMapDriver, 'border-x border-t border-orange-200 px-2 pt-2 pb-5': driver.breakMessage
+              }"
+              >
+
+                <div class="flex-1 flex items-center gap-2 cursor-pointer mt-0 mb-1">
+                  <div class="relative inline-block">
+                    <div class="h-8 w-8 rounded-full overflow-hidden object-cover bg-main-imageplaceholder">
+                      <img class="h-full w-full" src="{{driver.profileImageURL}}" alt="" />
+                      <svg class="h-full w-full text-main-light" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </div>
+                    <span class="flex absolute h-3 w-3 bottom-0 right-0">
+
+                      <span [ngClass]="{
+                            'bg-status-offline-light': driver.status === 'offline',
+                            'bg-status-busy-light': driver.status === 'buzy',
+                            'bg-status-online-light': driver.status === 'online'
+                          }" class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"></span>
+                      <span [ngClass]="{
+                            'bg-status-offline-dark': driver.status === 'offline',
+                            'bg-status-busy-dark': driver.status === 'buzy',
+                            'bg-status-online-dark': driver.status === 'online'
+                          }" class="relative inline-flex rounded-full h-3 w-3"></span>
+                    </span>
+                  </div>
+                  <div (click)="hightlightDriver(driver)" class="flex-1 truncate">
+                    <span class="text-sm font-medium text-main-dark">
+                      {{driver.displayName | capitalize}}
+                    </span>
+                  </div>
+                  <div class="flex space-x-1">
+                    <span (click)="openDriverTripDetailModal(driver._id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="text-main-primary h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                      </svg>
+
+                    </span>
+
+                    <span (click)="onClickProfile(driver)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="text-main-primary h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>
+
+                    </span>
+                  </div>
+                </div>
+                <a *ngIf="driver.fleet && driver.fleet.camera" class="p-1 cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5 text-main-primary">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                  </svg>
+                </a>
+                <div *ngIf="driver.breakMessage"
+                  class="absolute bottom-0  w-full rounded-br-2xl rounded-bl-2xl text-center text-xs bg-orange-200 text-gray-700 px-1 py-0.5 rounded-y right-0">
+                  <div>
+                    {{driver.breakMessage}}
+                  </div>
+                </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="relative z-0 h-96 lg:h-full lg:flex-1 overflow-y-auto focus:outline-none xl:order-last p-2">
+      <!-- absolute right-0 my-2 mx-16 z-10 -->
+      <flx-circle-timer class="absolute left-48 top-5 z-10 countDownTimer bg-container-base/70 p-1 rounded-full" #timer
+        color="#40337f" [duration]="duration" (onComplete)="onTimerComplete()"></flx-circle-timer>
+      <!-- absolute right-6 top-6 -->
+      <div class="absolute right-20 top-4 z-10">
+        <div (click)="isFilter = !isFilter"
+          class="relative ring-1 ring-main-base h-10 w-10 bg-container-base/70 backdrop-blur-xl rounded-lg grid place-content-center cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6 text-main-dark">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+          </svg>
+        </div>
+        <div *ngIf="isFilter"
+          class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-lg bg-container-base/70 backdrop-blur-xl shadow-lg ring-1 ring-main-base focus:outline-none "
+          role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+          <ul class="divide-y divide-main-base">
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  In Progress Routes
+                </div>
+                <div>
+                  <button (click)="isInprogressRoutes = !isInprogressRoutes"
+                    [ngClass]="isInprogressRoutes ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isInprogressRoutes ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isInprogressRoutes ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isInprogressRoutes ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Marked Ready Trips
+                </div>
+                <div>
+                  <button (click)="isMarkedReadyTrips = !isMarkedReadyTrips"
+                    [ngClass]="isMarkedReadyTrips ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isMarkedReadyTrips ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isMarkedReadyTrips ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isMarkedReadyTrips ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Marked Ready Routes
+                </div>
+                <div>
+                  <button (click)="isMarkedReadyRoutes = !isMarkedReadyRoutes"
+                    [ngClass]="isMarkedReadyRoutes ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isMarkedReadyRoutes ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isMarkedReadyRoutes ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isMarkedReadyRoutes ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Expired Trips
+                </div>
+                <div>
+                  <button (click)="isExpiredTrips = !isExpiredTrips"
+                    [ngClass]="isExpiredTrips ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isExpiredTrips ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isExpiredTrips ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isExpiredTrips ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Expired Trips Routes
+                </div>
+                <div>
+                  <button (click)="isExpiredTripRoutes = !isExpiredTripRoutes"
+                    [ngClass]="isExpiredTripRoutes ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isExpiredTripRoutes ? 'translate-x-5' : 'translate-x-0'"
+                      class="translate-x-0 pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isExpiredTripRoutes ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isExpiredTripRoutes ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li *ngIf="false" class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Approaching Trips
+                </div>
+                <div>
+                  <button (click)="isApproachingTrips = !isApproachingTrips"
+                    [ngClass]="isApproachingTrips ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isApproachingTrips ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isApproachingTrips ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isApproachingTrips ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Traffic
+                </div>
+                <div>
+                  <button (click)="toggleTraffic()" [ngClass]="isTraffic ? 'bg-main-primary' : 'bg-main-light/50'"
+                    type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isTraffic ? 'translate-x-5' : 'translate-x-0'"
+                      class="translate-x-0 pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isTraffic ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isTraffic ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="p-2">
+              <div class="flex justify-between items-center">
+                <div class="text-xs font-medium">
+                  Auto Zoom
+                </div>
+                <div>
+                  <button (click)="isAutoZoom = !isAutoZoom"
+                    [ngClass]="isAutoZoom ? 'bg-main-primary' : 'bg-main-light/50'" type="button"
+                    class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main-primary focus:ring-offset-2"
+                    role="switch" aria-checked="false">
+                    <span class="sr-only">Use setting</span>
+                    <span [ngClass]="isAutoZoom ? 'translate-x-5' : 'translate-x-0'"
+                      class="pointer-events-none relative inline-block h-4 w-4 transform rounded-full bg-container-base shadow ring-0 transition duration-200 ease-in-out">
+                      <span
+                        [ngClass]="isAutoZoom ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-light" fill="none" viewBox="0 0 12 12">
+                          <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span
+                        [ngClass]="isAutoZoom ? 'opacity-100 ease-out duration-100' : 'opacity-0 ease-out duration-100'"
+                        class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                        aria-hidden="true">
+                        <svg class="h-3 w-3 text-main-primary" fill="currentColor" viewBox="0 0 12 12">
+                          <path
+                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- [styles]="styles" -->
+      <google-map 
+        class="h-full w-full object-cover rounded overflow-hidden"
+      [center]="center"
+      [zoom]="zoom"
+      (mapClick)="moveMap($event)"
+      (mapMousemove)="move($event)">
+    </google-map>
+    </div>
+  </div>
+</div>
+
+<!-- <app-trip-detail-dialog *ngIf="tripModalObject" [object]="tripModalObject"></app-trip-detail-dialog>
+
+<app-trip-assign-modal *ngIf="assignModalObj" [assignModalObj]="assignModalObj" [componentType]="'dispatchDashboard'"
+  (tripAssigned)="tripAssignedResponse($event)" (onCloseModal)="onCloseModal($event)">
+</app-trip-assign-modal>
+
+<app-dispatch-inprogress-trips-slideout *ngIf="showInprogressTripsSlideout" [trips]="tripsInProgress"
+  (close)="showInprogressTripsSlideout = false"></app-dispatch-inprogress-trips-slideout>
+
+  <app-dispatch-driver-trips-modal *ngIf="driverTripModalObj" [driverId]="driverTripModalObj" (close)="closeModal($event)">
+</app-dispatch-driver-trips-modal>
+
+<app-driver-profile-dashboard *ngIf="driverDetailProfileModal" [driverProfileModalObj]="driverDetailProfileModal"
+  (onCloseModal)="driverDetailProfileModal =null"></app-driver-profile-dashboard> -->

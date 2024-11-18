@@ -1,0 +1,534 @@
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex flex-col gap-4 min-h-full">
+  <!-- <div
+    class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2"
+  >
+    <button class="w-full btn-primary">General Information</button>
+    <button class="w-full btn-white">Credentialing</button>
+  </div> -->
+  <!-- General Information Vehicle form -->
+  <form class="card flex-1 divide-y divide-main-base flex flex-col gap-4" [formGroup]="fleetForm"
+    (ngSubmit)="onSubmit()">
+    <div>
+      <div>
+        <h3 class="text-lg font-medium leading-6 text-main-dark">
+          {{fleetId ? "Edit": "Add"}}
+        </h3>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+        <div class="sm:col-span-2">
+          <label for="regNo" class="block text-sm font-medium text-main-secondary">Rig No.</label>
+          <div class="mt-1">
+            <input type="text" name="regNo" id="regNo" formControlName="setiDecall" />
+          </div>
+          <div *ngIf="form.setiDecall.errors && isSubmitted">
+            <div *ngIf="form.setiDecall.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Rig No is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="serviceAreas" class="block text-sm font-medium text-main-secondary">Service Area(s)</label>
+          <div class="mt-1">
+            <ng-select [items]="serviceAreas" formControlName="serviceAreas" [clearable]="false" [multiple]="true"
+              [closeOnSelect]="false" bindValue="_id" bindLabel="name" placeholder="-- Select Service Area(s) --"
+              class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+              [searchable]="true">
+
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                  [ngModel]="item$.selected" /> {{item.name}}
+              </ng-template>
+            </ng-select>
+          </div>
+
+          <div *ngIf="form.serviceAreas.errors && isSubmitted">
+            <div *ngIf="form.serviceAreas.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Service Area(s) is required
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="sm:col-span-2">
+          <label for="vehicleType" class="block text-sm font-medium text-main-secondary">Level of Service</label>
+          <div class="mt-1">
+            <ng-select formControlName="los" id="los" [clearable]="false" (ngModelChange)="onLosChange($event)"
+              class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+              <ng-option value="">-- Select Level of Service --</ng-option>
+              <ng-option *ngFor="let los of levelOfServices | sortBy:'asc':'title'" value="{{ los._id }}">{{los.title |
+                capitalize}}</ng-option>
+            </ng-select>
+
+
+          </div>
+
+          <div *ngIf="form.los.errors && isSubmitted">
+            <div *ngIf="form.los.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Level of Service is required
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="spaceType" class="block text-sm font-medium text-main-secondary">Space Type</label>
+          <div class="mt-1">
+            <ng-select formControlName="spaceType" id="spaceType" [clearable]="false"
+              (ngModelChange)="onSpaceTypeChange($event)"
+              class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+              <ng-option value="">-- Select Space Type --</ng-option>
+              <ng-option *ngFor="let spaceType of spaceTypes | sortBy:'asc':'title'"
+                value="{{ spaceType._id }}">{{spaceType.title | capitalize}} ({{spaceType.description}})</ng-option>
+            </ng-select>
+
+
+
+          </div>
+          <div *ngIf="form.spaceType.errors && isSubmitted">
+            <div *ngIf="form.spaceType.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Space Type is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="bodyType" class="block text-sm font-medium text-main-secondary">Body Type</label>
+          <div class="mt-1">
+            <select id="bodyType" formControlName="bodyType">
+              <option value="">-- Select Body Type --</option>
+              <option *ngFor="let item of bodyTypes" value="{{item.value}}">{{item.key}}</option>
+            </select>
+          </div>
+          <div *ngIf="form.bodyType.errors && isSubmitted">
+            <div *ngIf="form.bodyType.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Body Type is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="Equipment" class="block text-sm font-medium text-main-secondary">Equipments</label>
+          <div class="mt-1">
+            <ng-select [items]="equipments" formControlName="equipments" [clearable]="false" [multiple]="true"
+              [closeOnSelect]="false" bindValue="_id" bindLabel="title" placeholder="-- Select Equipment --"
+              class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+              [searchable]="true">
+
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}"
+                  [ngModel]="item$.selected" /> {{item.title}}
+              </ng-template>
+            </ng-select>
+          </div>
+          <div *ngIf="form.equipments.errors && isSubmitted">
+            <div *ngIf="form.equipments.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Equipments are required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="capacity" class="block text-sm font-medium text-main-secondary">Capacity</label>
+          <div class="mt-1">
+            <div class="mt-1">
+              <select id="capacity" formControlName="capacity">
+                <option value="">-- Select Capacity --</option>
+                <option *ngFor="let item of capacity" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="form.capacity.errors && isSubmitted">
+            <div *ngIf="form.capacity.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Capacity is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+
+          <div class="flex justify-between">
+            <label for="FundingSource" class="block text-sm font-medium">Funding
+              Sources </label>
+            <div >
+              <button type="button" class="btn-primary bg-main-primary-100 text-main-primary text-xs p-1 cursor-pointer hover:text-white" (click)="selectAllFundingSource(fundingSources.length === form.fundingSources.value.length)">{{fundingSources.length === form.fundingSources.value.length ? 'Un Select All': 'Select All'}}</button>
+            </div>
+          </div>
+          <!-- <div class="mt-1">
+            <ng-select [items]="fundingSources" formControlName="fundingSources" [clearable]="false" [multiple]="true"
+            [closeOnSelect]="false" bindValue="_id" bindLabel="displayName" placeholder="-- Select Funding Source --"
+            class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm"
+             [searchable]="true">
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" />
+              {{ item.displayName | capitalize }}
+            </ng-template>
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items | slice:0:2;index as index">
+                <span class="ng-value-label">{{item.displayName}}</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 2">
+                <span class="ng-value-label">{{items.length - 2}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+          </div> -->
+          <div *ngIf="form.fundingSources.errors && isSubmitted">
+            <div *ngIf="form.fundingSources.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Funding Sources are required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="VIN" class="block text-sm font-medium text-main-secondary">VIN</label>
+          <div class="mt-1">
+            <input type="text" name="VIN" id="VIN" formControlName="vin" />
+          </div>
+          <div *ngIf="form.vin.errors && isSubmitted">
+            <div *ngIf="form.vin.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                VIN is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="licensePlate" class="block text-sm font-medium text-main-secondary">License
+            Plate</label>
+          <div class="mt-1">
+            <input type="text" name="licensePlate" id="licensePlate" formControlName="driverCarNumber" />
+          </div>
+          <div *ngIf="form.driverCarNumber.errors && isSubmitted">
+            <div *ngIf="form.driverCarNumber.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                License plate is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="CurrentOdometer" class="block text-sm font-medium text-main-secondary">Current Meter</label>
+          <div class="mt-1">
+            <input type="text" name="CurrentOdometer" id="CurrentOdometer" formControlName="realOdometer" />
+          </div>
+          <!-- <div *ngIf="form.realOdometer.errors && isSubmitted">
+            <div *ngIf="form.realOdometer.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Current Odometer is required
+              </p>
+            </div>
+          </div> -->
+        </div>
+        <div class="sm:col-span-2">
+          <label for="year" class="block text-sm font-medium text-main-secondary">Year</label>
+          <div class="mt-1">
+            <input type="text" name="year" id="year" formControlName="driverCarYear" />
+          </div>
+          <div *ngIf="form.driverCarYear.errors && isSubmitted">
+            <div *ngIf="form.driverCarYear.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Year is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="Model" class="block text-sm font-medium text-main-secondary">Make & Model</label>
+          <div class="mt-1">
+            <input type="text" name="Model" id="Model" formControlName="driverCarModel" />
+          </div>
+          <div *ngIf="form.driverCarModel.errors && isSubmitted">
+            <div *ngIf="form.driverCarModel.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Make & Model is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="color" class="block text-sm font-medium text-main-secondary">Color</label>
+          <div class="mt-1">
+            <input type="text" name="Color" id="Color" formControlName="driverCarColor" />
+          </div>
+          <div *ngIf="form.driverCarColor.errors && isSubmitted">
+            <div *ngIf="form.driverCarColor.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Color is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="fuelType" class="block text-sm font-medium text-main-secondary">Fuel Type</label>
+          <div class="mt-1">
+            <select id="fuelType" formControlName="fuelType">
+              <option value="">-- Select Fuel Type --</option>
+              <option *ngFor="let item of fuelTypes" value="{{item.value}}">{{item.key}}</option>
+            </select>
+          </div>
+          <div *ngIf="form.fuelType.errors && isSubmitted">
+            <div *ngIf="form.fuelType.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Fuel Type is required
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="GasCardNumber" class="block text-sm font-medium text-main-secondary">Gas Card
+            Number</label>
+          <div class="mt-1">
+            <input type="text" name="GasCardNumber" id="GasCardNumber" formControlName="gasCardNumber" />
+          </div>
+          <div *ngIf="form.gasCardNumber.errors && isSubmitted">
+            <div *ngIf="form.gasCardNumber.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Gas Card Number is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="status" class="block text-sm font-medium text-main-secondary">Status</label>
+          <div class="mt-1">
+            <select id="status" formControlName="status">
+              <option value="">-- Select Status --</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div *ngIf="form.status.errors && isSubmitted">
+            <div *ngIf="form.status.errors.required" class="error">
+              <p class="mt-2 text-xs text-main-danger">
+                Status is required
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-span-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="Limitation" class="block text-sm font-medium text-main-secondary">Limitation</label>
+            <div class="mt-1">
+              <textarea name="" id="Limitation" formControlName="limitation"></textarea>
+            </div>
+
+          </div>
+          <div class="sm:col-span-3">
+            <label for="Notes" class="block text-sm font-medium text-main-secondary">Notes</label>
+            <div class="mt-1">
+              <textarea name="" id="Notes" formControlName="notes"></textarea>
+            </div>
+            <p class="mt-2 text-xs text-main-danger hidden">
+              Please enter the Notes
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-4" formGroupName="dimensions">
+      <div>
+        <h3 class="text-lg font-medium leading-6 text-main-dark">
+          Dimensions
+        </h3>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+        <div class="sm:col-span-2">
+          <label for="width" class="block text-sm font-medium text-main-secondary">Width <span
+              class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="width" id="width" formControlName="width" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="Height" class="block text-sm font-medium text-main-secondary">Height <span
+              class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="Height" id="Height" formControlName="height" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="Length" class="block text-sm font-medium text-main-secondary">Length <span
+              class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="Length" id="Length" formControlName="length" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="GroundClearance" class="block text-sm font-medium text-main-secondary">Ground
+            Clearance <span class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="GroundClearance" id="GroundClearance" formControlName="groundClearance" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="bedLength" class="block text-sm font-medium text-main-secondary">Bed Length <span
+              class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="bedLength" id="bedLength" formControlName="bedLength" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="RampWidth" class="block text-sm font-medium text-main-secondary">Ramp Width <span
+              class="text-main-light">(mm)</span></label>
+          <div class="mt-1">
+            <input type="text" name="RampWidth" id="RampWidth" formControlName="rampWidth" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-4" formGroupName="owner">
+      <div>
+        <h3 class="text-lg font-medium leading-6 text-main-dark">
+          Owner Details
+        </h3>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-6">
+        <div class="sm:col-span-2">
+          <label for="name" class="block text-sm font-medium text-main-secondary">Name </label>
+          <div class="mt-1">
+            <input type="text" name="name" id="name" formControlName="name" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="address" class="block text-sm font-medium text-main-secondary">Address</label>
+          <div class="mt-1">
+            <input type="text" class="form-control" name="address" id="address" google-place formControlName='address'
+              placeholder="" (onSelect)="getAddress($event)" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="phone" class="block text-sm font-medium text-main-secondary">Phone Number</label>
+          <div class="mt-1">
+            <input type="text" name="phone" id="phone" formControlName="phone" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="business" class="block text-sm font-medium text-main-secondary">Business Number </label>
+          <div class="mt-1">
+            <input type="text" name="business" id="business" formControlName="business" />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="licenseNo" class="block text-sm font-medium text-main-secondary">License Number</label>
+          <div class="mt-1">
+            <input type="text" name="licenseNo" id="licenseNo" formControlName="licenseNo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-4">
+      <details class="border-2 border-dashed border-main-base p-2 rounded-lg w-full max-w-4xl">
+        <summary class="flex justify-between items-center gap-2">
+        
+            <h3 class="text-lg font-medium leading-6 text-main-dark">
+              Capacities
+            </h3>
+       
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+              class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+            </svg>
+          </div>
+        </summary>
+        <div class="mt-2 flex justify-end">
+          <div>
+            <button type="button"
+              class="btn-primary bg-main-primary-100 text-main-primary text-xs p-1 cursor-pointer hover:text-white"
+              (click)="selectAllCapacities(capacitiesForm.length === spaceTypeCapacity.length)">{{capacitiesForm.length
+              ===
+              spaceTypeCapacity.length ? 'Un Select All': 'Select All'}}</button>
+          </div>
+        </div>
+        <!-- <div
+          class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-6 items-end border-2 border-dashed border-main-base p-2 rounded-lg bg-gray-50"
+          *ngFor="let capacityForm of capacitiesForm.controls; index as capacityIndex ">
+          <ng-container [formGroup]="capacityForm">
+    
+            <div class=" sm:col-span-2">
+              <label for="validationCustomUsername" class="block text-sm font-medium text-main-secondary">Space
+                Type</label>
+              <div class="mt-1 flex gap-px">
+                <ng-select formControlName="spaceType" id="spaceType" [clearable]="false"
+                  (ngModelChange)="onSpaceTypeChange($event)"
+                  class="p-0 form-control block w-full rounded-md text-main-secondary placeholder:text-main-light border border-main-base shadow-sm focus:border-main-primary focus:ring-main-primary text-sm ">
+                  <ng-option value="">-- Select Space Type --</ng-option>
+                  <ng-option *ngFor="let spaceType of spaceTypeCapacity | sortBy:'asc':'title'"
+                    value="{{ spaceType._id }}">{{spaceType.title | capitalize}}
+                    ({{spaceType.description}})</ng-option>
+                </ng-select>
+              </div>
+    
+              <div *ngIf="capacityForm.controls.spaceType.errors && isSubmitted ">
+                <div *ngIf="capacityForm.controls.spaceType.errors.required" class="">
+                  <p class="mt-2 text-xs text-main-danger ">
+                    SpaceType is required
+                  </p>
+                </div>
+              </div>
+            </div>
+    
+    
+            <div class="sm:col-span-2 ">
+    
+              <label class="block text-sm font-medium text-main-secondary" for="validationCustomUsername">
+                Capacity</label>
+              <div class="mt-1">
+                <select id="capacity" formControlName="capacity">
+                  <option value="">-- Select Capacity --</option>
+                  <option *ngFor="let item of capacity" value="{{item}}">{{item}}</option>
+                </select>
+              </div>
+              <div *ngIf="capacityForm.controls.capacity.errors && isSubmitted">
+                <div *ngIf="capacityForm.controls.capacity.errors.required" class="">
+                  <p class="mt-2 text-xs text-main-danger ">
+                    Capacity is required
+                  </p>
+                </div>
+              </div>
+    
+    
+            </div>
+    
+    
+            <div class="">
+              <button type="button" class="btn-danger" (click)="removeCapacity(capacityIndex)">Remove</button>
+            </div>
+          </ng-container>
+    
+        </div> -->
+        <div class="mt-2">
+          <div class="flex justify-start">
+            <button type="button" (click)="addCapacity()" class="btn-primary">+ Add</button>
+          </div>
+          <!-- <div class="flex justify-start" *ngIf="isSubmitted && !capacitiesForm.controls.length ">
+                  <p class="mt-2 text-xs text-main-danger ">
+                    Capacity and Space Type is required
+                  </p>
+                </div> -->
+        </div>
+      </details>
+    </div>
+
+
+
+    <div class="pt-4">
+      <div class="flex justify-end">
+        <button type="submit" class="ml-3 btn-primary">{{fleetId ? "Update" : "Create"}}</button>
+      </div>
+    </div>
+  </form>
+</div>

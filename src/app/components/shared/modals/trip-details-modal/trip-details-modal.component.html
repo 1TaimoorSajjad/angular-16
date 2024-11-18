@@ -1,0 +1,329 @@
+<div class="fixed z-50" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <!-- Background backdrop, show/hide based on slide-over state. -->
+    <div class="fixed inset-0 bg-main-light bg-opacity-75 transition-opacity backdrop-blur-sm"></div>
+  
+    <div class="fixed inset-0 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+          <!--
+              Slide-over panel, show/hide based on slide-over state.
+    
+              Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+                From: "translate-x-full"
+                To: "translate-x-0"
+              Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+                From: "translate-x-0"
+                To: "translate-x-full"
+            -->
+          <div class="pointer-events-auto w-screen max-w-7xl">
+            <div class="flex h-full flex-col overflow-y-scroll bg-container-base shadow-xl">
+              <div class="p-6 border-b border-main-base">
+                <div class="flex items-start justify-between">
+                  <h2 class="text-lg font-medium text-main-dark" id="slide-over-title">
+                    Trip Details
+                  </h2>
+                  <div class="ml-3 flex h-7 items-center">
+                    <button (click)="modalClose()" type="button"
+                      class="rounded-md bg-container-base text-main-light hover:text-main-secondary focus:ring-2 focus:ring-main-primary">
+                      <span class="sr-only">Close panel</span>
+                      <!-- Heroicon name: outline/x-mark -->
+                      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 overflow-y-auto p-6 grid grid-cols-2 gap-8">
+                <div class="space-y-8">
+                  <div class="flex flex-col text-xs">
+                    <div class="relative pb-2">
+                      <span
+                        class="absolute inset-y-0 mt-1 left-3.5 -ml-px h-full w-0.5 border border-dashed border-main-light"
+                        aria-hidden="true"></span>
+                      <div class="relative flex items-start gap-x-2">
+                        <div class="p-1 bg-container-base rounded-full">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5 text-main-success">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                          </svg>
+                        </div>
+                        <div class="mt-1">
+                          <div *ngIf="tripDetail && tripDetail.jobOriginAddress" class="text-main-secondary">
+                            {{tripDetail.jobOriginAddress}}
+                          </div>
+                          <div *ngIf="tripDetail && tripDetail.scheduleTime"  class="text-main-light">{{tripDetail.scheduleTime | date :'' :''}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative">
+                      <div class="relative flex items-start gap-x-2">
+                        <div class="p-1 bg-container-base rounded-full">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5 text-main-danger">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                          </svg>
+                        </div>
+                        <div  class="mt-1">
+                          <div *ngIf="tripDetail && tripDetail.jobDestinationAddress" class="text-main-secondary">
+                            {{tripDetail.jobDestinationAddress}}
+                          </div>
+                          <div *ngIf="tripDetail && tripDetail.appointmentTime" class="text-main-light">{{tripDetail.appointmentTime | date : '' : ''}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="font-medium text-sm text-main-dark">Trip Route</h3>
+                    <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                      <div class="py-3">
+                        <div *ngIf="tripDetail" class="">
+                          <!-- <agm-map class="h-64" [latitude]="tripDetail.jobOriginLatitude"
+                            [longitude]="tripDetail.jobOriginLongitude">
+                            <agm-direction [origin]="origin" [destination]="destination">
+                            </agm-direction>
+                            <agm-overlay
+                              *ngIf="tripDetail.driver && (tripDetail.status === 'accepted' || tripDetail.status === 'offered' || tripDetail.status === 'inprogress'  )"
+                              [latitude]="tripDetail.driver.latitude"
+                              [longitude]="tripDetail.driver.longitude">
+                              <div>
+                                <img style="cursor: pointer;" class="online" class="h-8 w-8 rounded-full object-cover"
+                                  src="{{ tripDetail.driver.profileImageURL.includes('modules') ? '../../../../../../assets/images/users/default-user.png' :tripdetailModallObj.driver.profileImageURL }}">
+                                <p class="online-dot"><i class="fa fa-circle" style="font-size:5px;"></i></p>
+                              </div>
+                            </agm-overlay>
+                          </agm-map> -->
+                          <!-- [center]="center" [zoom]="zoom" -->
+                          <google-map height="400px" width="600px">
+                            <map-directions-renderer *ngIf="(directionsResults$ | async) as directionsResults"
+                                  [directions]="directionsResults">
+                            </map-directions-renderer>
+                          </google-map>
+                        </div>
+                      </div>
+                    </dl>
+                  </div>
+                  <div *ngIf="tripDetail && tripDetail.job" class="grid grid-cols-2 gap-4">
+                    
+                    <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        Accepted At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <img class="h-full w-full object-cover" loading="lazy"
+                              [src]="googleImageURL(tripDetail.job.trackInfoJob.jobAccepted.coords[1],tripDetail.job.trackInfoJob.jobAccepted.coords[0])" />
+  
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+  
+                    <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        On Scene At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <img class="h-full w-full object-cover" loading="lazy"
+                              [src]="googleImageURL(tripDetail.job.trackInfoJob.jobArrived.coords[1],tripDetail.job.trackInfoJob.jobArrived.coords[0])" />
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+  
+                    <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        Started At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <img class="h-full w-full object-cover" loading="lazy"
+                            [src]="googleImageURL(tripDetail.job.trackInfoJob.jobArrived.coords[1],tripDetail.job.trackInfoJob.jobArrived.coords[0])" />
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+  
+                    <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        Ended At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <img class="h-full w-full object-cover" loading="lazy"
+                              [src]="googleImageURL(tripDetail.job.trackInfoJob.jobCompleted.coords[1],tripDetail.job.trackInfoJob.jobCompleted.coords[0])"/>
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+  
+                    <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        Finsihed At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <img class="h-full w-full object-cover" loading="lazy"
+                              [src]="googleImageURL(tripDetail.job.trackInfoJob.jobFinished.coords[1],tripDetail.job.trackInfoJob.jobFinished.coords[0])"/>
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+  
+                    <!-- <div>
+                      <h3 class="font-medium text-sm text-main-dark">
+                        Cancelled At
+                      </h3>
+                      <dl class="mt-2 divide-y divide-main-base border border-main-base">
+                        <div class="py-3">
+                          <div class="aspect-[3/2]">
+                            <iframe
+                              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d217760.17132170757!2d74.19430481992357!3d31.482864081259816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1676900844357!5m2!1sen!2s"
+                              class="h-full w-full object-cover" loading="lazy"
+                              referrerpolicy="no-referrer-when-downgrade"></iframe>
+                          </div>
+                        </div>
+                      </dl>
+                    </div> -->
+  
+  
+                  </div>
+                </div>
+                <div class="space-y-8">
+                  <div>
+                    <h3 class="font-medium text-sm text-main-dark">
+                      Trip Information
+                    </h3>
+                    <dl class="mt-2 divide-y divide-main-base border-t border-b border-main-base">
+                      <!-- <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Pickup Distance</dt>
+                        <dd class="text-main-dark">0 Miles</dd>
+                      </div> -->
+                      <div *ngIf="tripDetail && tripDetail.tripId" class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Trip ID</dt>
+                        <dd class="text-main-dark">{{tripDetail.tripId}}</dd>
+                      </div>
+                      <div *ngIf="tripDetail && tripDetail.status" class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Trip Status</dt>
+                        <dd class="text-main-dark">
+                          <span
+                            class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{{tripDetail.status}}</span>
+                        </dd>
+                      </div>
+                      <!-- <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">BROKER</dt>
+                        <dd class="text-main-dark">Cash</dd>
+                      </div> -->
+                      
+                      <div *ngIf="tripDetail && tripDetail.company && tripDetail.company.displayName " class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">PROVIDER</dt>
+                        <dd class="text-main-dark">{{tripDetail.company.displayName}}</dd>
+                      </div>
+  
+                      <div *ngIf="tripDetail && tripDetail.companyType " class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">BROKER</dt>
+                        <dd class="text-main-dark">{{tripDetail.companyType || 'N/A'}}</dd>
+                      </div>
+  
+                      <!-- <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Trip Type</dt>
+                        <dd class="text-main-dark">Assign</dd>
+                      </div> -->
+  
+                      <div *ngIf="tripDetail && tripDetail.tripRequirement" class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Vehicle</dt>
+                        <dd class="text-main-dark">{{tripDetail.tripRequirement}}</dd>
+                      </div>
+  
+                      <div *ngIf="tripDetail && tripDetail.memberNotes" class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Member's Note</dt>
+                        <dd class="text-main-dark">{{tripDetail.memberNotes || 'N/A'}}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                  <div *ngIf="tripDetail && tripDetail.driver">
+                    <h3 class="font-medium text-sm text-main-dark">
+                      Driver Information
+                    </h3>
+                    <dl  class="mt-2 divide-y divide-main-base border-t border-b border-main-base">
+                      <div class="flex justify-between items-center py-3 text-xs font-medium">
+                        <dt class="text-main-light">Driver Image</dt>
+                        <dd class="h-8 w-8 rounded-full overflow-hidden">
+                          <img src="{{tripDetail.driver.profileImageURL}}" alt=""
+                            class="h-full w-full object-cover" />
+                        </dd>
+                      </div>
+                      <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Driver Name</dt>
+                        <dd class="text-main-dark">{{tripDetail.driver.displayName}}</dd>
+                      </div>
+                      <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Phone Number</dt>
+                        <dd class="text-main-dark">{{tripDetail.driver.contactNumber}}</dd>
+                      </div>
+  
+                    </dl>
+                  </div>
+  
+                  <div>
+                    <h3 class="font-medium text-sm text-main-dark">
+                      Member Information
+                    </h3>
+                    <dl *ngIf="tripDetail && tripDetail.priorityClient" class="mt-2 divide-y divide-main-base border-t border-b border-main-base">
+                      <!-- <div
+                          class="flex justify-between items-center py-3 text-xs font-medium"
+                        >
+                          <dt class="text-main-light">Driver Image</dt>
+                          <dd class="h-8 w-8 rounded-full overflow-hidden">
+                            <img
+                              src="{{tripdetailModallObj.driver.profileImageURL}}"
+                              alt=""
+                              class="h-full w-full object-cover"
+                            />
+                          </dd>
+                        </div> -->
+                      <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Member Name</dt>
+                        <dd class="text-main-dark">{{tripDetail.priorityClient.displayName}}</dd>
+                      </div>
+                      <div class="flex justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Phone Number</dt>
+                        <dd class="text-main-dark">{{tripDetail.priorityClient.contactNumber}}</dd>
+                      </div>
+  
+                    </dl>
+                  </div>
+                  <div *ngIf="tripDetail && tripDetail.companyNote">
+                    <h3 class="font-medium text-sm text-main-dark">
+                      Notes
+                    </h3>
+                    <dl class="mt-2 divide-y divide-main-base border-t border-b border-main-base">
+                      <div *ngIf="tripDetail.companyNote"
+                        class="flex flex-col justify-between py-3 text-xs font-medium">
+                        <dt class="text-main-light">Company/Driver Notes</dt>
+                        <dd class="text-main-dark">
+                          {{tripDetail.companyNote}}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

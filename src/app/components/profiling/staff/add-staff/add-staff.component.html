@@ -1,0 +1,233 @@
+<!-- ----New Code --- -->
+<div class="relative z-0 px-4 sm:px-6 lg:px-8 py-4 bg-main-base-100 flex-1">
+    <form [formGroup]="addNewStaff" (ngSubmit)="saveStaff()">
+        <div class="max-w-5xl flex flex-col gap-8">
+            <div class="card divide-y divide-main-base flex flex-col gap-8">
+                <div>
+                    <div>
+                        <!-- {{staffUserId ? 'Edit' : 'Add'}} -->
+                        <h3 class="text-lg font-medium leading-6 text-main-dark">
+                          Add
+                        </h3>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label for="display-name" class="block text-sm font-medium text-main-secondary">Display Name</label>
+                            <div class="mt-1">
+                                <input type="text" formControlName="displayName"  name="display-name" id="display-name" />
+                            </div>
+                            <div *ngIf="form.displayName.errors && submitted">
+                                <div *ngIf="form.displayName.errors.required" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Name is required
+                                    </p>
+                                </div>
+                                <div *ngIf="form.displayName.errors.minlength" class="">
+                                  <p class="mt-2 text-xs text-main-danger">
+                                      Length must be 3
+                                  </p>
+                              </div>
+                            </div>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="contact-number" class="block text-sm font-medium text-main-secondary">Contact
+                                Number</label>
+                            <div class="mt-1">
+                                <input type="text" formControlName="contactNumber" autocomplete="off" name="contact-number" id="contact-number" />
+                            </div>
+                            <div *ngIf="form.contactNumber.errors && submitted">
+                                <div *ngIf="form.contactNumber.errors.required" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Phone is required
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="address" class="block text-sm font-medium text-main-secondary">Address</label>
+                            <div class="mt-1">
+                                <input
+                                id="address" google-place
+                                formControlName='address'
+                                (onSelect)="getAddress($event)"
+                                type="text" name="address" id="address" />
+                            </div>
+                            <div *ngIf="(form.address.errors || form.latitude.errors) && submitted">
+                                <div *ngIf="(form.address.errors && form.address.errors.required) ||
+                                            (form.latitude.errors && form.latitude.errors.required)" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Address is required
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="sm:col-span-6">
+                            <label for="address" class="block text-sm font-medium text-main-secondary">Profile
+                                Image</label>
+                            <div class="relative overflow-hidden rounded-full inline-flex mt-1">
+                                <img *ngIf="profileImageURL" [src]="profileImageURL" alt="user-image"
+                                    class="relative h-32 w-32 rounded-full border border-main-base" />
+                                    <img *ngIf="!profileImageURL" [src]="'assets/images/placeholders/driver-placeholder.png'"
+                                    alt="user-image" class="relative h-32 w-32 rounded-full border border-main-base" />
+
+                                <label for="desktop-user-photo"
+                                    class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100">
+                                    <span>Change</span>
+                                    <span class="sr-only"> user photo</span>
+
+                                    <input
+                                    #imageInput type="file" accept="image/*" style="width: 100%;" [hidden]="true"
+                                    (change)="processFile(imageInput)"
+                                    type="file" id="desktop-user-photo" name="user-photo"
+                                        class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-main-base opacity-0" />
+                                </label>
+
+                            </div>
+                            <div *ngIf="(selectedFile === null && profileImageURL === null) && submitted" class="error">
+                                <p class="mt-2 text-xs text-main-danger">
+                                    Profile Image is required
+                                </p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-8">
+                    <div>
+                        <h3 class="text-lg font-medium leading-6 text-main-dark">
+                            Legal Information
+                        </h3>
+                        <p class="mt-1 text-sm text-main-light">
+                            Use a permanent address where you can receive mail.
+                        </p>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label for="role-type" class="block text-sm font-medium text-main-secondary">Role
+                                Type</label>
+                            <div class="mt-1">
+                                <select formControlName="roles" data-toggle="select2" id="roles" required id="role-type">
+                                    <option value="">-- Select Role Type --</option>
+                                    <option value="admin">Full Access</option>
+                                    <option value="dispatcher">Dispatcher</option>
+                                    <!-- <option *ngFor='let role of authService.staffComponentRoles | keyvalue'
+                                    value='{{role.key}}'>{{role.value}}</option> -->
+                                </select>
+                            </div>
+                             <div *ngIf="form.roles.errors && submitted">
+                                <div *ngIf="form.roles.errors.required" class="error">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Role is required
+                                    </p></div>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="account-status" class="block text-sm font-medium text-main-secondary">Status</label>
+                            <div class="mt-1">
+                                <select id="account-status" formControlName="accountStatus" data-toggle="select2" id="accountStatus" required>
+                                    <option value="">-- Select Status --</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">In Active</option>
+                                    <!-- <option *ngFor='let AccountStatus of authService.accountStatus | keyvalue' value='{{AccountStatus.key}}'>{{AccountStatus.value}}</option> -->
+
+                                </select>
+                                <div *ngIf="form.accountStatus.errors && submitted">
+                                    <div *ngIf="form.accountStatus.errors.required" class="">
+                                        <p class="mt-2 text-xs text-main-danger">
+                                            Status is required
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="email" class="block text-sm font-medium text-main-secondary">Email
+                                Address</label>
+                            <div class="mt-1 relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <!-- Heroicon name: mini/envelope -->
+                                    <svg class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path
+                                            d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
+                                        <path
+                                            d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+                                    </svg>
+                                </div>
+                                <input type="email" formControlName="email"  autocomplete="off" class="pl-10" name="email" id="email" />
+                            </div>
+
+                            <div *ngIf="form.email.errors && submitted">
+                                <div *ngIf="form.email.errors.required" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Email is required
+                                    </p>
+                                </div>
+                                <div *ngIf="form.email.errors.email" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Email is not Valid
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label for="password" class="block text-sm font-medium text-main-secondary">Password</label>
+                            <div class="mt-1 relative">
+                                <div class="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3" (click)="togglePasswordType()">
+                                    <!-- Heroicon name: mini/envelope -->
+
+                                    <svg
+
+                                    *ngIf="passwordToggleFlag" class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+
+                                    <svg
+
+                                    *ngIf="!passwordToggleFlag" class="h-5 w-5 text-main-light" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+                                </div>
+                                <input [type]="passwordToggleFlag? 'password': 'text'"  autocomplete="off" formControlName="password" class="pr-10" name="password" id="password" />
+                            </div>
+                            <div *ngIf="form.password.errors && submitted">
+                                <div *ngIf="form.password.errors.required" class="">
+                                    <p class="mt-2 text-xs text-main-danger ">
+                                        Password is required
+                                    </p>
+                                </div>
+                                <div *ngIf="form.password.errors.minlength" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Password must be atleast 6 characters
+                                    </p>
+
+                                </div>
+                                <div *ngIf="form.password.errors.maxlength" class="">
+                                    <p class="mt-2 text-xs text-main-danger">
+                                        Password must be maximum of 16 characters
+                                    </p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-8">
+                    <div class="flex justify-end">
+
+                        <button type="submit" class="ml-3 btn-primary">Create</button>
+                        <!-- {{staffUserId ? 'Update' : 'Create'}} -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
